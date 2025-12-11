@@ -1,0 +1,21 @@
+{
+  "name": "eSIMwallet.io",
+  "short_name": "eSIMwallet",
+  "description": "Browse and Buy Your Perfect eSIM in one place",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3166E3",
+  "icons": [
+    {
+      "src": "/images/favicon-app-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon-app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

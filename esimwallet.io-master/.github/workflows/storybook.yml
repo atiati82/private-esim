@@ -1,0 +1,36 @@
+name: Storybook
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+      - development
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  storybook:
+    name: Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 'Set node_version'
+        run: echo "node_version=$(cat .nvmrc)" >> $GITHUB_ENV
+      - name: 'Install/use node ${{ env.node_version }}'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ env.node_version }}'
+      - name: 'Install/use pnpm'
+        uses: pnpm/action-setup@v3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build Storybook
+        run: pnpm storybook:build --quiet
+      - name: Chromatic build & upload
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

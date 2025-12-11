@@ -1,0 +1,13 @@
+.field-type--array-condensed {
+  .field-type.text {
+    label {
+      display: none;
+    }
+    input {
+      height: auto;
+      padding-left: 1rem;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+  }
+}

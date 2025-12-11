@@ -1,0 +1,15 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="ENV Variables" />
+
+# ENV Variables
+
+- `PAYLOAD_DATABASE_URI` - should work out-of-the box with local MongoDB (run with `docker compose up`). Switch to remote database, if needed.
+- `PAYLOAD_SECRET` - no need to change for local/dev env, keep it hard to guess for production
+- `BLOB_READ_WRITE_TOKEN` - Needed for persistent files to work (e.g. provider images imported into CMS).
+- `MOBIMATTER_*` - needed to fetch products from MobiMatter, make orders etc.
+- `APP_FULL_BUILD=true` - Experimental. When set, full production build is made, with all pages pre-rendered. Otherwise, only a few pages are pre-rendered during `next build` / `next start`. This is mostly to support fast re-build when working locally with production version (e.g. `pnpm start:watch`) - otherwise generating hundreds of pages is taking too long. Also, could be used during build for Pull Requests, when we don't really need all pages pre-rendered.
+- `USE_PRODUCTION_EMAIL_TRANSPORT=false` - by default we send emails to `.cache/last-email-sent.json`. Set to `true` to start using real/production e-mail transport and actually dispatch emails.
+- `GOOGLE_CLOUD_SERVICE_ACCOUNT_JSON_API_KEY` - full .json content with Service Account key to access Google Cloud services
+- `CHROMATIC_PROJECT_TOKEN` - Chromatic.com project token - needed to upload results for UI testing/reviews (configured on CI, need to configure if you want the `pnpm chromatic` command to work locally).
+- `STRIPE_*` related keys: needed to run Stripe payments and `pnpm stripe:listen` command

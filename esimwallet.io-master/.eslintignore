@@ -1,0 +1,4 @@
+.next
+/tests-e2e/reports/
+/tests-e2e/test-results/
+/src/app/(payload)/

@@ -1,0 +1,14 @@
+# Connect using connection str:
+# mongodb://admin:super-secret-password@127.0.0.1:27017/
+
+services:
+  mongo:
+    image: mongo:7.0.8
+    restart: always
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - 27017:27017
+
+volumes:
+  mongodb_data:

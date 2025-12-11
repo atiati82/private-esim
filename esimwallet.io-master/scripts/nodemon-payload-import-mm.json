@@ -1,0 +1,7 @@
+{
+  "exec": "tsx ./src/payload/cli/import-mobimatter-cmd",
+  "delay": 1000,
+  "watch": ["src/payload"],
+  "ext": "ts",
+  "ignore": ["node_modules"]
+}

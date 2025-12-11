@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="E2E testing" />
+
+# E2E testing
+
+We use [Playwright](https://playwright.dev/) for E2E testing. Install required browser/dependencies by running:
+
+```bash
+pnpm e2e:install
+```
+
+E2E are configured to use http://localhost:3000 as the target server (and use it, if it's already running). You can run it against production build (`pnpm build && pnpm start`) or against development server.
+
+```bash
+# Run E2E tests and open the report
+pnpm e2e && pnpm e2e:report
+
+# Run E2E with UI (for development)
+pnpm e2e --ui
+
+# Only run tests in Chrome
+pnpm e2e --project=chromium
+```
+
+#### Running E2E against Production
+
+When running tests against production build or server, you should use `e2e:prod` script. It'll set `PRODUCTION_TEST` env variable which you can use in your .spec files and, for instance, test extra functionality present only on Production (e.g. cache responses).
+
+```bash
+// For convenience, you can run prod build with watch mode
+// which will recompile and restart like 'build & dev' commands do.
+pnpm start:watch
+
+pnpm e2e:prod
+```

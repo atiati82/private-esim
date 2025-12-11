@@ -1,0 +1,133 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+      - development
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  #
+  # Code Checks job
+  #
+  checks:
+    name: Code Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Set node_version'
+        run: echo "node_version=$(cat .nvmrc)" >> $GITHUB_ENV
+      - name: 'Install/use node ${{ env.node_version }}'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ env.node_version }}'
+      - name: 'Install/use pnpm'
+        uses: pnpm/action-setup@v3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - name: 'Check: Lint'
+        run: pnpm lint:check
+      - name: 'Check: Code formatting'
+        run: pnpm format:check
+      - name: 'Check: Types'
+        run: pnpm types:check
+      - name: 'payload generate X'
+        run: pnpm payload:generate
+      - name: 'Check: uncommitted files (e.g. after payload:generate:types)'
+        run: |
+          if [[ -n "$(git status --porcelain -unormal)" ]]; then
+            echo "ERROR: Project directory contains uncommitted changes:"
+            git status --porcelain -unormal
+            echo "\n\n" && git diff
+            exit 1
+          else
+            echo "OK: All good!"
+          fi
+      - name: 'Check: incorrect spelling of eSIMwallet'
+        run: |
+          ! git ls-files --cached --exclude-standard | grep -v "ci-tests.yml" | xargs grep -rl -E "(eSIM wallet|eSIM Wallet|eSIMWallet)"
+
+  #
+  # Unit tests job
+  #
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Set node_version'
+        run: echo "node_version=$(cat .nvmrc)" >> $GITHUB_ENV
+      - name: 'Install/use node ${{ env.node_version }}'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ env.node_version }}'
+      - name: 'Install/use pnpm'
+        uses: pnpm/action-setup@v3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - name: RUN UNIT TESTS
+        run: pnpm test
+
+  e2e:
+    name: E2E Tests
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+    env:
+      MOBIMATTER_MERCHANT_ID: ${{ secrets.MOBIMATTER_MERCHANT_ID }}
+      MOBIMATTER_API_KEY: ${{ secrets.MOBIMATTER_API_KEY }}
+      BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+      GOOGLE_CLOUD_SERVICE_ACCOUNT_JSON_API_KEY: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_JSON_API_KEY }}
+    steps:
+      - name: Tune GitHub-hosted runner network
+        uses: smorimoto/tune-github-hosted-runner-network@v1
+      - uses: actions/checkout@v4
+      - name: 'Set node_version'
+        run: echo "node_version=$(cat .nvmrc)" >> $GITHUB_ENV
+      - name: 'Install/use node ${{ env.node_version }}'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ env.node_version }}'
+          cache-dependency-path: 'pnpm-lock.yaml'
+      - name: 'Install/use pnpm'
+        uses: pnpm/action-setup@v3
+      - name: 'Cache'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - name: Install Playwright Browsers
+        run: pnpm e2e:install
+      - name: payload:init-db
+        run: pnpm payload:init-db
+      - name: payload:import-mm
+        run: pnpm payload:import-mm
+      - name: Build the app for E2E tests (Production)
+        run: pnpm build:analyze
+      - name: RUN E2E TESTS
+        run: pnpm e2e:prod
+      #      - uses: actions/upload-artifact@v4
+      #        if: always()
+      #        with:
+      #          name: BundleSize-Reports
+      #          path: .next/analyze/
+      #          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Playwright-E2E-Traces
+          path: tests-e2e/test-results/
+          retention-days: 1

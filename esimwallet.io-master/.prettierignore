@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+/src/app/(payload)/
+/src/payload/app-types.ts
+.next
+/public/
+/tests-e2e/reports/
+/tests-e2e/test-results/

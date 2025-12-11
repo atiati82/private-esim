@@ -1,0 +1,7 @@
+{
+  "exec": "payload generate:importmap; payload generate:types",
+  "delay": 1000,
+  "watch": ["src/payload/"],
+  "ext": "js,jsx,ts,tsx",
+  "ignore": ["node_modules"]
+}

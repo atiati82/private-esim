@@ -1,0 +1,10 @@
+export const EsimProductsCollectionId = 'esim-products';
+export const EsimProductsDataCollectionId = 'esim-products-data';
+export const DestinationsCollectionId = 'destinations';
+export const EsimProvidersCollectionId = 'esim-providers';
+export const MediaCollectionId = 'media';
+export const RegionsCollectionId = 'regions';
+export const UsersCollectionId = 'users';
+export const BlogPostCollectionId = 'blog-posts';
+export const BlogCategoriesCollectionId = 'blog-categories';
+export const BlogTagsCollectionId = 'blog-tags';

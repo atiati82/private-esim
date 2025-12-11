@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Orders and Payments" />
+
+# Orders and Payments
+
+1. Add something to the card
+2. Pay for it - if you don't want to spend real money, use [Stripe test cards](https://docs.stripe.com/testing#cards).
+
+Assuming you have Stripe .env keys (for your test sandbox) configured and you run `pnpm dev`, Stripe daemon automatically connects to test sandbox and relay all webhook events to the local site.
+
+After that, you should see new Transaction and Order Items in the Payload CMS - and their payment statuses up-to-date.
+
+### Working with Stripe
+
+- make sure you have .env variables set for STRIPE (for the _Development_ Sandbox)
+- login to Stripe Dashboard, switch to your _Development_ sandbox
+- install Stripe CLI,
+- (OPTIONAL) run `stripe login` from shell to make `stripe` CLI fully functional (otherwise don't worry, .env keys are enough)
+- do `pnpm dev` which will listen to all Stripe hooks and forward them to our `/api/transactions/stripe-webhook` handler
+
+For more info, visit [stripe.com/stripe-cli](https://docs.stripe.com/stripe-cli).
+
+**In case of problems**, re-run `pnpm dev` and carefully inspect the log.
+
+- Do you have `stripe` CLI installed?
+- Are .env keys present?

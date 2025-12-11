@@ -1,0 +1,14 @@
+import React, { JSX } from 'react';
+import Link from 'next/link';
+
+const NotFound: React.FC = (): JSX.Element => {
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+      <Link href="/">Return Home</Link>
+    </div>
+  );
+};
+
+export default NotFound;

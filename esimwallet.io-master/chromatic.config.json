@@ -1,0 +1,12 @@
+{
+  "projectId": "Project:666956b4ed41e44e63f11467",
+  "buildScriptName": "storybook:build",
+  "storybookBuildDir": ".dist/storybook",
+  "storybookLogFile": ".dist/build-storybook.log",
+  "debug": false,
+  "logFile": ".dist/chromatic.log",
+  "diagnosticsFile": ".dist/chromatic-diagnostics.json",
+  "junitReport": ".dist/chromatic-report.xml",
+  "onlyChanged": true,
+  "zip": true
+}

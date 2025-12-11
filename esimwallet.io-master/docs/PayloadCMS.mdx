@@ -1,0 +1,23 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Payload CMS" />
+
+# Payload CMS at eSIMwallet
+
+Access PayloadCMS on `/payload` URL. If users database was empty, dummy `dev@esimwallet.io` user will be created (with password `password`).
+
+```bash
+# Launch local MongoDB server
+docker-compose up
+
+# Import initial data (regions, destinations)
+pnpm payload:init-db
+
+# Import MobiMatter products
+pnpm payload:import-mm
+pnpm payload:import-mm cleanImport=true # don't sync - clean db and re-import everything again
+pnpm payload:import-mm:watch
+
+# Generate Payload types (to reflect changes in defined collections)
+pnpm payload:generate
+```

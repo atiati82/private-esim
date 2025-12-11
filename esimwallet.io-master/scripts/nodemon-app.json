@@ -1,0 +1,7 @@
+{
+  "exec": "next build --no-lint && next start",
+  "delay": 1000,
+  "watch": ["next-config.mjs", ".env", "src/*"],
+  "ext": "js,jsx,ts,tsx",
+  "ignore": ["node_modules"]
+}
