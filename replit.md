@@ -102,10 +102,12 @@ Preferred communication style: Simple, everyday language.
 ### Replit Environment Notes
 - **Database Requirement**: This project requires MongoDB (used by PayloadCMS). Replit provides PostgreSQL natively, not MongoDB.
 - **To run**: Provide a MongoDB Atlas connection string in `PAYLOAD_DATABASE_URI` secret
+- **Middleware**: Updated `src/middleware.ts` to allow requests from Replit domains (*.replit.dev, *.repl.co) without authentication
 - **Alternative**: Would require significant refactoring to use PostgreSQL adapter for PayloadCMS
 
 ### Running on Replit
-1. Set `PAYLOAD_DATABASE_URI` secret to a MongoDB Atlas connection string
-2. Configure required Stripe and reCAPTCHA credentials (optional for initial testing)
-3. Run: `cd esimwallet.io-master && pnpm next:dev -p 5000`
-4. After database connected, run `pnpm payload:import-mm` to import MobiMatter products
+1. Set `PAYLOAD_DATABASE_URI` secret to a MongoDB Atlas connection string (with IP whitelist set to 0.0.0.0/0)
+2. Set `MOBIMATTER_MERCHANT_ID` and `MOBIMATTER_API_KEY` secrets for eSIM product import
+3. Configure required Stripe and reCAPTCHA credentials (optional for initial testing)
+4. Run: `cd esimwallet.io-master && pnpm next:dev -p 5000`
+5. After database connected, run `pnpm payload:import-mm` to import MobiMatter products
