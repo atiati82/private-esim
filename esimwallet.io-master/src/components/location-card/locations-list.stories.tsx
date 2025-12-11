@@ -10,7 +10,7 @@ import { mockDestinations, mockDestinationSe } from '@/testing/destinations.mock
 import { mockProductEsimUk2 } from '@/testing/products.mock';
 
 const meta: Meta<typeof LocationsList> = {
-  title: 'eSIMwallet / Destinations / Locations List',
+  title: 'Private eSIM / Destinations / Locations List',
   component: LocationsList,
   args: {
     dataItems: mockDestinations,

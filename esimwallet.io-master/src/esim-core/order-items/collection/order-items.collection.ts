@@ -50,7 +50,7 @@ export const OrderItemsCollection: CollectionConfig = {
   },
   labels: { singular: 'Order, Package', plural: 'Orders, Packages' },
   admin: {
-    group: 'eSIMwallet',
+    group: 'Private eSIM',
     useAsTitle: 'title',
     defaultColumns: ['title', 'esimCard', 'user', 'transactionPaymentStatus', 'createdAt'],
     listSearchableFields: ['id', 'product', 'transaction'],

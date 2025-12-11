@@ -25,7 +25,7 @@ export const MeetOurTeam: React.FC<MeetOurTeamProps> = ({ members }) => {
     <div className={styles.meetOurTeamContainer}>
       <Headline as="h1">Meet Our Team</Headline>
       <p className={styles.meetOurTeamSubTitle}>
-        The passionate individuals driving eSIMwallet forward
+        The passionate individuals driving Private eSIM forward
       </p>
       <div className={styles.teamMemberList}>
         {members.map((member) => (

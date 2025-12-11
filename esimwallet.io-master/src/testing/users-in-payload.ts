@@ -16,7 +16,7 @@ export async function mockUserInPayload(userDto: Partial<UserDto>): Promise<User
   const data: UserDto = <UserDto>{
     ...mockUserDto,
     fullName: `Mock User ${mockUserCount}`,
-    email: `mock.user.${mockUserCount}@esimwallet.io`,
+    email: `mock.user.${mockUserCount}@private-esim.com`,
     password: 'some.password',
     ...userDto,
   };

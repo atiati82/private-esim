@@ -62,8 +62,8 @@ function isAuthenticated(authHeader: string | null): boolean {
 }
 
 function requestAuthentication(): NextResponse {
-  const eSIMwalletPoem = `
-    eSIMwallet, bridge to the stars,
+  const privateEsimPoem = `
+    Private eSIM, bridge to the stars,
     Beyond mere data, breaking bars.
     From GSM roots to cosmic heights,
     Connecting souls, igniting lights.
@@ -76,11 +76,11 @@ function requestAuthentication(): NextResponse {
     Boundless journeys, vast and free,
     Linking humanity’s destiny.
     Through realms unseen, we chart the way—
-    eSIMwallet, the path, the stay.
+    Private eSIM, the path, the stay.
 
     BTW: Authentication required.`;
 
-  return new NextResponse(eSIMwalletPoem, {
+  return new NextResponse(privateEsimPoem, {
     status: 401,
     headers: { 'WWW-Authenticate': 'Basic' },
   });

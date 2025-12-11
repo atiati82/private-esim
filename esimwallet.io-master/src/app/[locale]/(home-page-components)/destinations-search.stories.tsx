@@ -7,7 +7,7 @@ import { DestinationsSearch } from '@/app/[locale]/(home-page-components)/destin
 import { mockDestinations } from '@/testing/destinations.mock';
 
 const meta: Meta<typeof DestinationsSearch> = {
-  title: 'eSIMwallet / Destinations / Search',
+  title: 'Private eSIM / Destinations / Search',
   component: DestinationsSearch,
   parameters: {
     layout: 'fullscreen',

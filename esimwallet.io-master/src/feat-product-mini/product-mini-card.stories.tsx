@@ -8,7 +8,7 @@ import { mockProductEsimUk, mockProductEsimUk2 } from '@/testing/products.mock';
 import { mockRegionEurope } from '@/testing/regions.mock';
 
 const meta: Meta<typeof ProductMiniCard> = {
-  title: 'eSIMwallet / Products / Product Mini Card',
+  title: 'Private eSIM / Products / Product Mini Card',
   component: ProductMiniCard,
   argTypes: {},
   args: {

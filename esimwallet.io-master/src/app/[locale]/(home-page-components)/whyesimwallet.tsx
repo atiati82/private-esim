@@ -9,9 +9,9 @@ import * as styles from './whyesimwallet.css';
 export const WhyEsimwallet: React.FC = () => {
   return (
     <div className={styles.whyEsimWalletWrapper}>
-      <Headline like="h1">Why Choose eSIMwallet</Headline>
+      <Headline like="h1">Why Choose Private eSIM</Headline>
       <Textual variant="muted" className={styles.whyEsimWalletSubtitle}>
-        eSIMwallet is your go-to solution for effortless global connectivity and you can switch and
+        Private eSIM is your go-to solution for effortless global connectivity and you can switch and
         manage mobile networks easily wherever you are.
       </Textual>
       <WhyEsimwalletList items={WhyEsimwalletData} />

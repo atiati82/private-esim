@@ -10,7 +10,7 @@ export const AboutHero: React.FC = () => {
         Connecting the world with Innovative eSIM Solutions
       </p>
       <Headline as="h1" align="center">
-        About eSIMwallet
+        About Private eSIM
       </Headline>
       <p className={styles.aboutHeroDescription}>
         Your trusted partner in seamless global connectivity.

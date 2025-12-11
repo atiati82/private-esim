@@ -19,7 +19,7 @@ import { Transaction } from '@/feat-ordering/transactions/transactions';
  * We insert this field into Payment Metadata fields,
  * and we access this field in Strip hooks, to link our transaction with theirs.
  */
-export const eSIMwalletTransactionIdInMetadata = 'eSIMwalletTransactionId';
+export const eSIMwalletTransactionIdInMetadata = 'PrivateESIMTransactionId';
 
 export function isStripeProductionEnv(): boolean {
   const isTestEnv = String(process.env.NEXT_PUBLIC_STRIPE_IS_TEST_KEY || 'true').toLowerCase();
@@ -58,7 +58,7 @@ export function isStripePaymentNewUnpaid(paymentStatus: TransactionPaymentStatus
 
 export function stripeDescription(transaction: Transaction): string {
   const transactionItemsCount = transaction.orderItems?.length ?? 0;
-  return `eSIMwallet #${transaction.id} x${transactionItemsCount} ${pluralize(transactionItemsCount, 'item')}`;
+  return `Private eSIM #${transaction.id} x${transactionItemsCount} ${pluralize(transactionItemsCount, 'item')}`;
 }
 
 export function stripeMetadataItems(transaction: Transaction): Record<string, string> {

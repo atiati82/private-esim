@@ -4,7 +4,7 @@ import { mockDestinationUAE, mockDestinationUK } from '@/testing/destinations.mo
 import { LocationCard } from './location-card';
 
 const meta: Meta<typeof LocationCard> = {
-  title: 'eSIMwallet / Destinations / Card',
+  title: 'Private eSIM / Destinations / Card',
   component: LocationCard,
   argTypes: {
     data: { control: 'object' },

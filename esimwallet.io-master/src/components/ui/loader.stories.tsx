@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Loader } from '@/components/ui/loader';
 
 const meta: Meta<typeof Loader> = {
-  title: 'ui.eSIMwallet / Loader',
+  title: 'ui.Private eSIM / Loader',
   component: Loader,
 };
 export default meta;

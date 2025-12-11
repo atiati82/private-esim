@@ -5,7 +5,7 @@ import { SearchCheck } from 'lucide-react';
 import { HeadlineHero } from './headline-hero';
 
 const meta: Meta<typeof HeadlineHero> = {
-  title: 'ui.eSIMwallet / HeadlineHero',
+  title: 'ui.Private eSIM / HeadlineHero',
   component: HeadlineHero,
   argTypes: {
     className: { control: 'text' },
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof HeadlineHero>;
 
 export const Default: Story = {
   args: {
-    title: 'eSIMwallet Blog',
+    title: 'Private eSIM Blog',
     subtitle: 'We are available through multiple channels.',
     tip: "We're here to help and answer any questions you may have.",
     tipIcon: <SearchCheck />,
@@ -35,24 +35,24 @@ export const Default: Story = {
 
 export const TitleOnly: Story = {
   args: {
-    title: 'eSIMwallet Blog',
+    title: 'Private eSIM Blog',
   },
 };
 export const TitleAndSubtitle: Story = {
   args: {
-    title: 'eSIMwallet Blog',
+    title: 'Private eSIM Blog',
     subtitle: 'We are available through multiple channels.',
   },
 };
 export const TitleAndTip: Story = {
   args: {
-    title: 'eSIMwallet Blog',
+    title: 'Private eSIM Blog',
     tip: 'We are available through multiple channels.',
   },
 };
 export const WithTipIcon: Story = {
   args: {
-    title: 'eSIMwallet Blog',
+    title: 'Private eSIM Blog',
     subtitle: 'We are available through multiple channels.',
     tip: "We're here to help and answer any questions you may have.",
     tipIcon: <SearchCheck />,

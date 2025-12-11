@@ -20,7 +20,7 @@ export const EsimWalletLogoLink: React.FC<EsimWalletLogoLinkProps> = ({
     <Link
       href={href}
       className={cn(styles.logoLink, linkClassName)}
-      title="eSIMwallet - store home page"
+      title="Private eSIM - store home page"
     >
       <EsimWalletLogo className={logoClassName} />
     </Link>
@@ -34,7 +34,7 @@ export const EsimWalletLogo: React.FC<EsimWalletLogoProps> = ({ className }) => 
   return (
     <span className={cn(styles.logoWrapper, className)}>
       <EsimWalletIcon className={styles.logoIcon} />
-      <span className={styles.logoText}>eSIMwallet</span>
+      <span className={styles.logoText}>Private eSIM</span>
     </span>
   );
 };

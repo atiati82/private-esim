@@ -48,7 +48,7 @@ export const UsersCollection: CollectionConfig = {
     useAsTitle: 'email',
     listSearchableFields: ['email', 'fullName', 'stripeCustomerId'],
     defaultColumns: ['email', 'fullName', 'roles', 'stripeCustomerId', 'lastActiveAt'],
-    description: 'eSIMwallet customers and our PayloadCMS users.',
+    description: 'Private eSIM customers and our PayloadCMS users.',
     pagination: { defaultLimit: 100 },
   },
   hooks: {

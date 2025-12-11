@@ -9,7 +9,7 @@ import * as styles from './how-it-works.css';
 export const HowItWorks: React.FC = () => {
   return (
     <div className={styles.howItWorksWrapper}>
-      <Headline like="h1">How eSIMwallet Works</Headline>
+      <Headline like="h1">How Private eSIM Works</Headline>
       <Textual variant="muted" className={styles.howItWorksSubtitle}>
         Your hassle-free solution to switch and manage mobile networks anywhere, anytime
       </Textual>

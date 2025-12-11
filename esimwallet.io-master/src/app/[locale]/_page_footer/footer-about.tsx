@@ -10,9 +10,9 @@ export const FooterAbout: React.FC = () => {
       <EsimWalletLogoLink linkClassName={styles.footerLogoLink} logoClassName={styles.footerLogo} />
 
       <p className={styles.footerCompanyDescription}>
-        Discover the future of mobile connectivity with eSIMwallet – flexible, prepaid eSIM
+        Discover the future of mobile connectivity with Private eSIM – flexible, prepaid eSIM
         solutions designed for travelers, digital nomads and business professionals. Unlock the
-        world with eSIMwallet, simplified with eSIM technology.
+        world with Private eSIM, simplified with eSIM technology.
       </p>
 
       <div className={styles.footerLogoPaymentsIcons}>

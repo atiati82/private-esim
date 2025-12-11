@@ -4,7 +4,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { Pagination } from './pagination';
 
 const meta: Meta<typeof Pagination> = {
-  title: 'ui.eSIMwallet / Pagination',
+  title: 'ui.Private eSIM / Pagination',
   component: Pagination,
   argTypes: {
     page: {

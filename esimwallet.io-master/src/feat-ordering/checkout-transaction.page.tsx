@@ -90,7 +90,7 @@ export const CheckoutTransactionPage: React.FC<CheckoutTransactionProps> = ({ tr
   };
   const stripePaymentElementOptions: StripePaymentElementOptions = {
     layout: 'accordion',
-    business: { name: 'eSIMwallet' },
+    business: { name: 'Private eSIM' },
   };
 
   return (

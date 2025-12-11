@@ -21,7 +21,7 @@ export const BlogPostInfo: React.FC<BlogPostInfoProps> = ({ data }) => {
               <User />
             </AvatarFallback>
           </Avatar>
-          <p>{(data?.author as UserDto)?.fullName || 'eSIMwallet'}</p>
+          <p>{(data?.author as UserDto)?.fullName || 'Private eSIM'}</p>
         </div>
         <p>
           Article Release Date:&nbsp;

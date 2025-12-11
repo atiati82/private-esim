@@ -70,7 +70,7 @@ export const PageNavigation: React.FC = () => {
 
                 <CommandSeparator className={styles.hideWhenMainNavVisible} />
                 <CommandGroup
-                  heading="eSIMwallet site menu"
+                  heading="Private eSIM site menu"
                   className={styles.hideWhenMainNavVisible}
                 >
                   {navItems.map(NavItem)}

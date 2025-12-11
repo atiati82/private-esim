@@ -11,7 +11,7 @@ import { Textual } from '@/components/ui/textual';
 import { spaceBetween } from '@/styles/layout.css';
 
 const meta: Meta<typeof Message> = {
-  title: 'ui.eSIMwallet / Message',
+  title: 'ui.Private eSIM / Message',
   component: Message,
   argTypes: {
     variant: { options: ['default', 'success', 'warning', 'error'] },

@@ -1,7 +1,7 @@
 import { urlForAccount } from '@/lib/urls';
 
 export function accountVerifyEmailSubject(): string {
-  return 'Confirm your eSIMwallet account';
+  return 'Confirm your Private eSIM account';
 }
 
 export function accountVerifyHtmlEmail({ token }: { token: string }): string {
@@ -9,7 +9,7 @@ export function accountVerifyHtmlEmail({ token }: { token: string }): string {
 
   return `Hey!
     <br /><br />
-    A new account has just been created for you to access <strong>eSIMwallet</strong> account.
+    A new account has just been created for you to access <strong>Private eSIM</strong> account.
     <br /><br />
     Please click on the following link or paste the URL below into your browser to verify your email:
     <a href="${verifyUrl}">${verifyUrl}</a>
@@ -18,5 +18,5 @@ export function accountVerifyHtmlEmail({ token }: { token: string }): string {
     <br /><br />
     -- <br />
     Yours sincerely,<br />
-    eSIMwallet team`;
+    Private eSIM team`;
 }

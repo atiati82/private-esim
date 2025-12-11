@@ -4,9 +4,9 @@ import { isDevelopment } from '@/env-helpers';
 
 export function generateMetadata(): Metadata {
   return {
-    title: 'eSIMwallet' + (isDevelopment ? ' DEV' : ''),
-    description: 'eSIMwallet',
-    applicationName: 'eSIMwallet',
+    title: 'Private eSIM' + (isDevelopment ? ' DEV' : ''),
+    description: 'Private eSIM - Your trusted eSIM provider',
+    applicationName: 'Private eSIM',
     icons: {
       icon: [
         { url: '/images/favicon.svg', type: 'image/svg+xml' }, // Default favicon

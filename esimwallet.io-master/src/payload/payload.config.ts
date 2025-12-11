@@ -34,7 +34,7 @@ import { TransactionsCollection } from '@/feat-ordering/transactions/collection/
 
 const payloadConfig: Config = {
   secret: process.env.PAYLOAD_SECRET || '',
-  cookiePrefix: 'eSIMwallet',
+  cookiePrefix: 'PrivateESIM',
   serverURL: process.env.NEXT_PUBLIC_WEBSITE_URL,
   csrf: [
     // `config.serverURL` is added by default
@@ -61,7 +61,7 @@ const payloadConfig: Config = {
   collections: [
     // Group: Default
     UsersCollection,
-    // Group: eSIMwallet
+    // Group: Private eSIM
     EsimCardsCollection,
     OrderItemsCollection,
     TransactionsCollection,
@@ -103,7 +103,7 @@ const payloadConfig: Config = {
       uploadsCollection: MediaCollectionId,
       tabbedUI: true,
       interfaceName: 'SeoMetaData',
-      generateTitle: ({ doc }: { doc: BlogPost }) => `${doc.title} | eSIMwallet`,
+      generateTitle: ({ doc }: { doc: BlogPost }) => `${doc.title} | Private eSIM`,
       generateDescription: ({ doc }: { doc: BlogPost }) => `${doc.excerpt}`,
       generateImage: ({ doc }: { doc: BlogPost }) => `${doc.featuredImage}`,
       generateURL: ({ doc }: { doc: BlogPost }) => urlForBlogPost(doc.slug),

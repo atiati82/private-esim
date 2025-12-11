@@ -29,7 +29,7 @@ export const Default: Story = {
       <div style={{ display: 'flex', gap: '1rem', flexDirection: 'column', width: '16rem' }}>
         <div>
           <Label>Input</Label>
-          <Input {...props} defaultValue="dev@esimwallet.io value" />
+          <Input {...props} defaultValue="dev@private-esim.com value" />
         </div>
         <div>
           <Label>Input: empty</Label>

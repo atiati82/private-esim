@@ -27,7 +27,7 @@ export const mockStripePaymentIntent = {
   amount_received: 4999,
   currency: 'usd',
   customer: 'cus_QudaK5q4Ewq8GF',
-  description: 'eSIMwallet #99941024-0cdd08 x1 item',
+  description: 'Private eSIM #99941024-0cdd08 x1 item',
   metadata: {
     [eSIMwalletTransactionIdInMetadata]: '99941024-0cdd08',
   },

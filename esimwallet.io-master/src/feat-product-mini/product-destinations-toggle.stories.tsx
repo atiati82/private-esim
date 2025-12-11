@@ -6,7 +6,7 @@ import { mockProductEsimUk, mockProductEsimUk2 } from '@/testing/products.mock';
 import { mockRegionEurope } from '@/testing/regions.mock';
 
 const meta: Meta<typeof ProductDestinationsToggle> = {
-  title: 'eSIMwallet / Destinations / Destinations Toggle',
+  title: 'Private eSIM / Destinations / Destinations Toggle',
   component: ProductDestinationsToggle,
   argTypes: {},
   args: {

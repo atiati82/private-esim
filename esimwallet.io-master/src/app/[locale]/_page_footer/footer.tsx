@@ -16,9 +16,9 @@ export const Footer: React.FC = () => {
       <footer className={styles.footerContainer}>
         <FooterAbout />
 
-        {/* explore esimwallet */}
+        {/* explore Private eSIM */}
         <FooterSection
-          title="Explore eSIMwallet"
+          title="Explore Private eSIM"
           items={footerLinks.exploreSIMwallet}
           className={styles.footerExploreESIMwallet}
         />
@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
       {/* copyright */}
       <div className={cn(styles.footerCopyrightsWrapper)}>
         <div className={styles.footerCopyrights}>
-          <div>© 2024 eSIMwallet. All rights reserved.</div>
+          <div>© 2024 Private eSIM. All rights reserved.</div>
 
           <div className={styles.footerCopyrightsSocialWrapper}>
             <p>Follow Us: </p>

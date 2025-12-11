@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => (
     <div>
-      <div>eSIMwallet is the best and it's here to stay.</div>
+      <div>Private eSIM is the best and it's here to stay.</div>
       <Separator space={args.space} />
       <div style={{ display: 'flex', height: 20, alignItems: 'center' }}>
         <div>Blog</div>

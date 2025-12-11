@@ -1,12 +1,27 @@
-# eSIMwallet
+# Private eSIM
 
 ## Overview
 
-eSIMwallet is a full-stack e-commerce platform for purchasing and managing eSIM products. Built with Next.js 14 (App Router) and PayloadCMS as the headless CMS, it enables users to browse eSIM plans by destination/region, add products to cart, and complete purchases via Stripe. The application supports internationalization (i18n) with multiple locales and includes a blog system for content marketing.
+Private eSIM (formerly eSIMwallet) is a full-stack e-commerce platform for purchasing and managing eSIM products. Built with Next.js 14 (App Router) and PayloadCMS as the headless CMS, it enables users to browse eSIM plans by destination/region, add products to cart, and complete purchases via Stripe. The application supports internationalization (i18n) with multiple locales and includes a blog system for content marketing.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Recent Changes (December 2024)
+
+### Rebranding Completed
+- **Brand Name**: Changed from "eSIMwallet" to "Private eSIM"
+- **Domain**: Updated from esimwallet.io to private-esim.com
+- **Admin Credentials**: admin@private-esim.com / password: admin
+- **Email Addresses**: All internal emails updated to @private-esim.com domain
+- **UI Text**: All user-facing branding updated across the application
+- **Cookie Prefix**: Changed from "eSIMwallet" to "PrivateESIM"
+
+### MobiMatter API Integration
+- **Status**: Verified and working
+- **Products Available**: 1,447 eSIM products ready to import
+- **Credentials**: Configured via MOBIMATTER_MERCHANT_ID and MOBIMATTER_API_KEY secrets
 
 ## System Architecture
 
@@ -19,7 +34,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend Architecture
 - **CMS**: PayloadCMS 3.x integrated directly into the Next.js application
-- **Database**: MongoDB (required by PayloadCMS) - run locally via Docker Compose
+- **Database**: MongoDB (required by PayloadCMS) - requires MongoDB Atlas connection
 - **API Routes**: 
   - PayloadCMS REST API at `/api/*`
   - Custom Next.js route handlers at `/esim-api/*`
@@ -55,20 +70,20 @@ Preferred communication style: Simple, everyday language.
 - **Vercel**: Hosting platform with deployment to Singapore region (sin1)
 - **Chromatic**: Visual regression testing for Storybook components
 - **Vercel Blob Storage**: Media file storage (configured via PayloadCMS plugin)
+- **MobiMatter**: eSIM product supplier - products imported via `payload:import-mm` CLI command
 
 ### Database
-- **MongoDB**: Primary database for PayloadCMS (local via Docker, production via cloud provider)
+- **MongoDB**: Primary database for PayloadCMS (requires MongoDB Atlas for Replit)
 - **Connection**: Set via `PAYLOAD_DATABASE_URI` environment variable
-
-### External Data Sources
-- **MobiMatter**: eSIM product supplier - products imported via `payload:import-mm` CLI command
 
 ### Key Environment Variables Required
 - `NEXT_PUBLIC_WEBSITE_URL`: Public URL of the application
-- `PAYLOAD_DATABASE_URI`: MongoDB connection string
+- `PAYLOAD_DATABASE_URI`: MongoDB Atlas connection string (required to run)
 - `PAYLOAD_SECRET`: Secret for PayloadCMS authentication
 - `STRIPE_SECRET_KEY`: Stripe API secret key
 - `STRIPE_WEBHOOK_SECRET`: Stripe webhook signing secret
+- `MOBIMATTER_MERCHANT_ID`: MobiMatter supplier merchant ID
+- `MOBIMATTER_API_KEY`: MobiMatter API key
 - `RECAPTCHA_*`: Google reCAPTCHA credentials
 
 ## Code Quality Scan (December 2024)
@@ -86,10 +101,11 @@ Preferred communication style: Simple, everyday language.
 
 ### Replit Environment Notes
 - **Database Requirement**: This project requires MongoDB (used by PayloadCMS). Replit provides PostgreSQL natively, not MongoDB.
-- **To run locally**: Provide a MongoDB Atlas connection string in `PAYLOAD_DATABASE_URI`
+- **To run**: Provide a MongoDB Atlas connection string in `PAYLOAD_DATABASE_URI` secret
 - **Alternative**: Would require significant refactoring to use PostgreSQL adapter for PayloadCMS
 
 ### Running on Replit
-1. Set `PAYLOAD_DATABASE_URI` to a MongoDB Atlas connection string
-2. Configure required Stripe and reCAPTCHA credentials
+1. Set `PAYLOAD_DATABASE_URI` secret to a MongoDB Atlas connection string
+2. Configure required Stripe and reCAPTCHA credentials (optional for initial testing)
 3. Run: `cd esimwallet.io-master && pnpm next:dev -p 5000`
+4. After database connected, run `pnpm payload:import-mm` to import MobiMatter products

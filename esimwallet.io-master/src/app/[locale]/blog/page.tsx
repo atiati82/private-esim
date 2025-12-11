@@ -22,7 +22,7 @@ export const generateStaticParams = async (): Promise<{ locale: string }[]> => {
 };
 
 export const metadata: Metadata = {
-  title: 'Blog | eSIMwallet',
+  title: 'Blog | Private eSIM',
   description:
     "We're here to help and answer any questions you may have, We are available through multiple channels.",
 };

@@ -17,7 +17,7 @@ const BlogListing: React.FC<BlogListingProps> = ({ page, docs, totalPages }) => 
   return (
     <div>
       <HeadlineHero
-        title="eSIMwallet Blog"
+        title="Private eSIM Blog"
         subtitle="We are available through multiple channels."
         tip="We're here to help and answer any questions you may have."
       />

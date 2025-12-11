@@ -18,7 +18,7 @@ import {
 } from '@/testing/products.mock';
 
 const meta: Meta<typeof ProductCard> = {
-  title: 'eSIMwallet / Products / Product Card',
+  title: 'Private eSIM / Products / Product Card',
   component: ProductCard,
   argTypes: {},
   args: {

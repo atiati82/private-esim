@@ -68,8 +68,8 @@ const legal = [
 
 const contact = [
   {
-    name: 'support@esimwallet.io',
-    url: 'mailto:support@esimwallet.io',
+    name: 'support@private-esim.com',
+    url: 'mailto:support@private-esim.com',
   },
   {
     name: 'Contact Us',

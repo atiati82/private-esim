@@ -31,7 +31,7 @@ export const TransactionsCollection: CollectionConfig = {
     update: accessSupportOnly,
   },
   admin: {
-    group: 'eSIMwallet',
+    group: 'Private eSIM',
     defaultColumns: ['id', 'user', 'total', 'paymentStatus', 'createdAt'],
     listSearchableFields: ['id', 'user', 'paymentId'],
     preview: (doc) => urlForTransactions(doc.id as string),

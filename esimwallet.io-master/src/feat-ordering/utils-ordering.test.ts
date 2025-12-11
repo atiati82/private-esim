@@ -19,9 +19,9 @@ describe('utils-ordering:', function () {
       ...transactionMultipleItems,
       orderItems: transactionMultipleItems.orderItems.slice(0, 1),
     };
-    expect(stripeDescription(transactionSingleItem)).toEqual('eSIMwallet #99941010-mockT0 x1 item');
+    expect(stripeDescription(transactionSingleItem)).toEqual('Private eSIM #99941010-mockT0 x1 item');
     expect(stripeDescription(transactionMultipleItems)).toEqual(
-      'eSIMwallet #99941010-mockT0 x2 items',
+      'Private eSIM #99941010-mockT0 x2 items',
     );
   });
 

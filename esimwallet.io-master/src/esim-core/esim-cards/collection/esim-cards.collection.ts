@@ -39,7 +39,7 @@ export const EsimCardsCollection: CollectionConfig = {
   },
   labels: { singular: 'eSIM Card', plural: 'eSIM Cards' },
   admin: {
-    group: 'eSIMwallet',
+    group: 'Private eSIM',
     defaultColumns: ['id', 'user', 'provider', 'providerStatus', 'lastPackageBuyDate'],
     listSearchableFields: ['id'],
     preview: (doc) => urlForMyWallet(doc.id as string),

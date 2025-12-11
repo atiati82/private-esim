@@ -27,7 +27,7 @@ export abstract class FulfillmentService {
   /**
    * Place a new order from Supplier
    *
-   * @param order eSIMwallet order item (with ordered {@link EsimProduct},
+   * @param order Private eSIM order item (with ordered {@link EsimProduct},
    *              for which a new order from Supplier is to be made
    *
    * @return Order fulfillment info + essential info/status about eSIM card for that order

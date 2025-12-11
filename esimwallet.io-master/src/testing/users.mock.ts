@@ -4,7 +4,7 @@ import { UserRole } from '@/payload/collections/users/roles';
 export const mockUserDto: UserDto = {
   id: '66c7dbe36e71037a971d7fb8',
   roles: [UserRole.Customer],
-  email: 'dev@esimwallet.io',
+  email: 'dev@private-esim.com',
   _verified: true,
   createdAt: '2024-10-10T00:00:00.000Z',
   updatedAt: '2024-12-12T00:00:00.000Z',

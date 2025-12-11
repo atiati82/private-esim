@@ -11,7 +11,7 @@ import {
 } from '@/testing/products.mock';
 
 const meta: Meta<typeof ProductsList> = {
-  title: 'eSIMwallet / Products / Products List',
+  title: 'Private eSIM / Products / Products List',
   component: ProductsList,
   decorators: [
     (Story) => (

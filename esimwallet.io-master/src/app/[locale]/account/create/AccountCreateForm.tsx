@@ -86,7 +86,7 @@ export const AccountCreateForm: React.FC = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Headline as="h2" like="h2-small" align="center">
-          Create eSIMwallet account
+          Create Private eSIM account
         </Headline>
         <FormMessage />
 
@@ -158,7 +158,7 @@ export const AccountCreateForm: React.FC = () => {
                     Terms and Conditions
                   </Link>
                   .
-                  <br />I also agree to eSIMwallet{' '}
+                  <br />I also agree to Private eSIM{' '}
                   <Link href={urlForPage(UrlForPage.PrivacyPolicy)}>Privacy Policy</Link>.
                 </FormLabel>
                 <FormMessage />
@@ -200,7 +200,7 @@ const prepareFlashMessage = (data: AccountCreateFormData): FlashMessage => {
           Please check your inbox and click the link to verify your account. Only after verifying
           your email will you be able to log in and start using your account.
         </Textual>
-        <Textual variant="footer">eSIMwallet team</Textual>
+        <Textual variant="footer">Private eSIM team</Textual>
       </>
     ),
   };
