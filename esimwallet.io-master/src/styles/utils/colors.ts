@@ -1,4 +1,55 @@
 /**
+ * Quantum Neutral palette - pure blacks for dark theme
+ */
+export const quantumNeutral = {
+  '50': 'hsl(0, 0%, 98%)',
+  '100': 'hsl(0, 0%, 96%)',
+  '200': 'hsl(0, 0%, 90%)',
+  '300': 'hsl(0, 0%, 83%)',
+  '400': 'hsl(0, 0%, 64%)',
+  '500': 'hsl(0, 0%, 45%)',
+  '600': 'hsl(0, 0%, 32%)',
+  '700': 'hsl(0, 0%, 25%)',
+  '800': 'hsl(0, 0%, 15%)',
+  '900': 'hsl(0, 0%, 9%)',
+  '950': 'hsl(0, 0%, 4%)', // #0a0a0a - Quantum dark background
+};
+
+/**
+ * Quantum Blue accent - blue-600 based
+ */
+export const quantumBlue = {
+  '50': 'hsl(214, 100%, 97%)',
+  '100': 'hsl(214, 95%, 93%)',
+  '200': 'hsl(213, 97%, 87%)',
+  '300': 'hsl(212, 96%, 78%)',
+  '400': 'hsl(213, 94%, 68%)',
+  '500': 'hsl(217, 91%, 60%)', // #3b82f6
+  '600': 'hsl(221, 83%, 53%)', // #2563eb - Quantum primary accent
+  '700': 'hsl(224, 76%, 48%)',
+  '800': 'hsl(226, 71%, 40%)',
+  '900': 'hsl(224, 64%, 33%)',
+  '950': 'hsl(226, 57%, 21%)',
+};
+
+/**
+ * Quantum Slate - for text on dark backgrounds
+ */
+export const quantumSlate = {
+  '50': 'hsl(210, 40%, 98%)',
+  '100': 'hsl(210, 40%, 96%)',
+  '200': 'hsl(214, 32%, 91%)',
+  '300': 'hsl(213, 27%, 84%)', // #cbd5e1 - secondary text
+  '400': 'hsl(215, 20%, 65%)', // #94a3b8 - muted text
+  '500': 'hsl(215, 16%, 47%)',
+  '600': 'hsl(215, 19%, 35%)',
+  '700': 'hsl(215, 25%, 27%)',
+  '800': 'hsl(217, 33%, 17%)',
+  '900': 'hsl(222, 47%, 11%)',
+  '950': 'hsl(229, 84%, 5%)',
+};
+
+/**
  * Royal Blue color
  *
  * DEFAULT: 600, generated from `#3166e3`
