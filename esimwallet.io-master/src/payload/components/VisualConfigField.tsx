@@ -98,7 +98,7 @@ export const VisualConfigField: React.FC = () => {
       padding: '16px',
       marginTop: '8px',
       backdropFilter: 'blur(16px)',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+      fontFamily: 'Geist, Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     }}>
       <div 
         onClick={() => setIsExpanded(!isExpanded)}

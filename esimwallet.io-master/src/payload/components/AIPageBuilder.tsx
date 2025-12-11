@@ -93,7 +93,7 @@ export const AIPageBuilder: React.FC<{
       padding: '16px',
       marginTop: '16px',
       backdropFilter: 'blur(16px)',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+      fontFamily: 'Geist, Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     }}>
       <div style={{
         display: 'flex',
