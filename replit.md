@@ -155,13 +155,18 @@ src/ai-cms/
 9. subtle-shimmer - Gentle brightness
 10. layered-parallax - 3D scroll effect
 
-### Content Clusters
-- destinations: Country and region eSIM pages
-- products: eSIM product and plan pages
+### Content Clusters (AI-Managed)
 - blog: News, guides, and articles
 - support: FAQ, help, and support pages
 - about: Company information
 - legal: Terms, privacy, legal pages
+
+Note: Destinations and products are managed via PayloadCMS admin due to complex schema requirements.
+
+### Known Limitations
+- AI CMS uses flat URL structure (e.g., /en/blog/my-post, /en/support/faq)
+- Nested paths beyond the cluster are not preserved in PayloadCMS storage
+- For complex page hierarchies, use PayloadCMS admin directly
 
 ### Token Costs (Estimated)
 - Light use (10 pages/day): ~$3-10/month with GPT-4.1-mini
