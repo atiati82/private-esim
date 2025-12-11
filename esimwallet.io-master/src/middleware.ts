@@ -6,22 +6,21 @@ import { intlRoutingConfig } from '@/i18n/routing';
 const intlMiddleware = createIntlMiddleware(intlRoutingConfig);
 
 export default function middleware(req: NextRequest): Response | NextResponse {
-  const isLocalhost = req.headers.get('host')!.includes('localhost');
+  const host = req.headers.get('host') || '';
+  const isLocalhost = host.includes('localhost');
+  const isReplitDev = host.includes('replit.dev') || host.includes('repl.co');
+  const isDevelopment = isLocalhost || isReplitDev;
 
   const isVercelUrl = req.url.includes('_vercel/');
   if (isVercelUrl) {
-    // Handle requests to /_vercel:
-    // - don't pass them through intlMiddleware
-    // - modify localhost responses, so they don't result with 404
-    //   e.g. for /_vercel/speed-insights/ scripts, present on PRODUCTION build)
-    if (isLocalhost) {
+    if (isDevelopment) {
       return new Response(null, { status: 204 });
     } else {
       return NextResponse.next();
     }
   }
 
-  if (!isLocalhost && !isAuthenticated(req.headers.get('authorization'))) {
+  if (!isDevelopment && !isAuthenticated(req.headers.get('authorization'))) {
     return requestAuthentication();
   }
 
