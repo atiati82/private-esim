@@ -131,13 +131,52 @@ src/ai-cms/
 ├── services/
 │   ├── ai-client.ts         # OpenAI client with function calling support
 │   ├── bigmind-cms.ts       # CMS manager with AI function tools
-│   └── payload-storage.ts   # PayloadCMS storage adapter
+│   ├── ai-pages-storage.ts  # AI Pages storage adapter (NEW)
+│   └── payload-storage.ts   # PayloadCMS storage adapter (legacy)
 ├── lib/
-│   ├── bigmind-parser.ts    # AI response parser
+│   ├── bigmind-parser.ts    # AI response parser with visual config extraction
 │   └── motion.ts            # Motion archetypes and animations
 └── components/
     └── andara-page-renderer.tsx  # Animated page renderer
+
+src/payload/
+├── collections/
+│   └── ai-pages/            # AI Pages Collection (NEW)
+│       └── ai-pages.collection.ts
+├── components/              # Custom admin components
+│   ├── AIPageBuilder.tsx    # Chat interface for AI content generation
+│   └── VisualConfigField.tsx # Motion designer modal
+└── admin/
+    └── custom.css           # Andara dark theme styling
 ```
+
+### AI Pages Collection (NEW)
+Dedicated PayloadCMS collection for AI-generated content with:
+- **Page Metadata**: Title, key, URL path, page type, template, status
+- **Content Clusters**: blog, support, about, legal, science, products, destinations
+- **SEO Settings**: Focus keyword, title, description, featured image
+- **Visual Config**: Vibe keywords, emotional tone, animation ideas, motion presets
+- **Motion Designer**: Entrance, hover, ambient, hero section, content sections, cards/boxes motion
+- **AI Prompts**: Image prompts, video prompts, designer notes
+- **AI Page Builder**: Chat history, last prompt (sidebar)
+
+### Andara Design System
+- **Theme**: PayloadCMS dark mode enabled via `payload.config.ts`
+- **Colors**: Deep blue/purple backgrounds (#0a0a14, #1a1a2e), teal accent (#00d4aa)
+- **Custom CSS**: Located at `src/app/(payload)/custom.scss` (PayloadCMS 3.x standard location)
+- **Custom Components**: AIPageBuilder, VisualConfigField with inline Andara styling
+
+### Styling Implementation
+The Andara dark theme is applied through:
+1. **PayloadCMS Dark Mode**: Enabled in `payload.config.ts` with `admin.theme: 'dark'`
+2. **Custom SCSS**: `src/app/(payload)/custom.scss` overrides CSS variables for the Andara color palette
+3. **Inline Styles**: Custom React components (AIPageBuilder, VisualConfigField) use inline styles for the Andara design
+
+Key CSS Variables:
+- `--theme-elevation-0`: #0a0a14 (deepest background)
+- `--theme-elevation-200`: #1a1a2e (card/panel background)
+- `--theme-success-500`: #00d4aa (teal accent color)
+- `--theme-warning-500`: #ff9500 (warning/missing badge color)
 
 ### API Endpoints
 - `POST /esim-api/ai-chat` - BigMind chat with function calling

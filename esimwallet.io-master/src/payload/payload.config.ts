@@ -59,7 +59,6 @@ const payloadConfig: Config = {
       autoGenerate: false,
     },
     theme: 'dark',
-    css: path.resolve(path.dirname('src'), 'payload/admin/custom.css'),
   },
   collections: [
     // Group: Default
