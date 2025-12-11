@@ -86,15 +86,15 @@ const payloadConfig: Config = {
   plugins: [
     vercelBlobStorage({
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
-      enabled: !process.env.TEST,
+      enabled: !process.env.TEST && !!process.env.BLOB_READ_WRITE_TOKEN && process.env.BLOB_READ_WRITE_TOKEN !== 'vercel_blob_rw_STOREID_STOREKEY',
       collections: {
         [MediaCollectionId]: {
           prefix: MediaCollectionId,
-          disableLocalStorage: true,
+          disableLocalStorage: false,
         },
         [EsimProvidersCollectionId]: {
           prefix: EsimProvidersCollectionId,
-          disableLocalStorage: true,
+          disableLocalStorage: false,
         },
       },
     }),

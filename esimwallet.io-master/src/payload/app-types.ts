@@ -289,7 +289,6 @@ export interface EsimProviderDto {
   id: string;
   name: string;
   websiteUrl?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -383,7 +382,6 @@ export interface EsimCardSetup {
 export interface MediaDto {
   id: string;
   name?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -793,7 +791,6 @@ export interface EsimProvidersSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   websiteUrl?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -812,7 +809,6 @@ export interface EsimProvidersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   name?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
