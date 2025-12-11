@@ -25,8 +25,11 @@ export const stickyWrapper = style({
   position: 'sticky',
   zIndex: cssVal.zIndex.nav,
   top: 0,
-  backgroundColor: `hsl(0 0% 100% / 0.8)`,
-  backdropFilter: 'blur(6px)',
+  backgroundColor: `rgba(10, 10, 10, 0.6)`,
+  backdropFilter: 'blur(24px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
 });
 
 export const container = style([
@@ -52,7 +55,11 @@ export const nav = style({
   'padding': cssVal.space.s2,
   'fontSize': cssVal.fontSize.sm,
   'borderRadius': _borderRadiusVar,
-  'backgroundColor': vars.color.secondary.default,
+  'backgroundColor': 'rgba(255, 255, 255, 0.03)',
+  'backdropFilter': 'blur(16px)',
+  'WebkitBackdropFilter': 'blur(16px)',
+  'border': '1px solid rgba(255, 255, 255, 0.06)',
+  'boxShadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 12px rgba(0, 0, 0, 0.2)',
   '@media': {
     ...mediaHideOnMobile,
     [cssVal.screen.md]: {
@@ -65,26 +72,35 @@ export const navItem = style([
   transitionBgColors,
   {
     'display': 'inline-block',
-    'color': vars.color.foreground,
+    'color': 'rgba(255, 255, 255, 0.9)',
     'textDecoration': 'none',
     'paddingTop': cssVal.space.s1,
     'paddingBottom': cssVal.space.s1,
     'paddingLeft': cssVal.space.s1,
     'paddingRight': cssVal.space.s1,
     'borderRadius': _borderRadiusVar,
+    'transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     'selectors': {
       '& + &': {
         marginLeft: cssVal.space.s4,
       },
       '&.active': {
-        backgroundColor: vars.color.background,
+        backgroundColor: 'rgba(37, 99, 235, 0.8)',
+        color: 'hsl(0 0% 100%)',
+        boxShadow: '0 0 20px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+      },
+      '&.active:hover': {
+        backgroundColor: 'rgba(37, 99, 235, 0.9)',
+        boxShadow: '0 0 24px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+      },
+      '&:not(.active):hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       },
     },
-    ':hover': {
-      backgroundColor: vars.color.background,
-    },
     ':active': {
-      color: vars.color.foregroundAccent,
+      color: 'hsl(221.2 83.2% 63.3%)',
+      transform: 'scale(0.98)',
     },
   },
 ]);

@@ -33,8 +33,8 @@ export const commandContainer = style(
 export const commandContainer_borderContainer = style(
   forCompLayer({
     borderWidth: 1,
-    borderColor: vars.color.border,
-    backgroundColor: vars.color.background,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: 'transparent',
   }),
 );
 // globalStyleCompLayer(`.popover-content > `, {})
@@ -85,11 +85,14 @@ export const commandItem = style(
     userSelect: 'none',
     outline: 'none',
     borderRadius: cssVal.radii.small,
+    color: 'rgba(255, 255, 255, 0.9)',
+    transition: 'all 0.2s ease',
     ...disabledButtonStates,
     selectors: {
       ...disabledButtonStates.selectors,
       '&[aria-selected="true"]': {
-        backgroundColor: vars.color.secondary.default,
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       },
     },
   }),
@@ -116,7 +119,8 @@ globalStyleCompLayer(`${commandItem}.navItem`, {
   fontSize: cssVal.fontSize.base,
 });
 globalStyleCompLayer(`${commandItem}.navItem[aria-selected="true"]`, {
-  backgroundColor: vars.color.accent.lighter,
+  backgroundColor: 'rgba(37, 99, 235, 0.3)',
+  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 12px rgba(37, 99, 235, 0.2)',
 });
 
 // flex px-11 py-2 pt-4 text-sm text-muted-foreground md:px-12

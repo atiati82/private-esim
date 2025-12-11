@@ -3,14 +3,18 @@ import { style } from '@vanilla-extract/css';
 import { cssVal } from '@/styles/css-values';
 import { pageContainer } from '@/styles/layout.css';
 import { vars } from '@/styles/theme.css';
-import { primary } from '@/styles/utils/colors';
+import { quantumNeutral, quantumBlue } from '@/styles/utils/colors';
 
 export const footerWrapper = style({
-  backgroundColor: primary['950'],
-  backgroundImage: `linear-gradient(.33turn, ${primary['900']}, ${primary[950]})`,
+  backgroundColor: 'rgba(10, 10, 10, 0.7)',
+  backgroundImage: `linear-gradient(180deg, rgba(23, 23, 23, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%)`,
+  backdropFilter: 'blur(24px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(24px) saturate(180%)',
   position: 'sticky',
   top: '100%',
   marginTop: cssVal.space.l2,
+  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 -4px 30px rgba(0, 0, 0, 0.3)',
 });
 
 export const footerContainer = style([
@@ -92,8 +96,8 @@ export const footerContactSection = style({
 export const footerCopyrightsWrapper = style({
   paddingTop: cssVal.space.base,
   paddingBottom: cssVal.space.base,
-  borderTopWidth: 0.5,
-  borderColor: vars.color.muted.foreground,
+  borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+  backgroundColor: 'rgba(0, 0, 0, 0.3)',
 });
 export const footerCopyrights = style([
   pageContainer,
