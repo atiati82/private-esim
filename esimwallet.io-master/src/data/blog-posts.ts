@@ -142,29 +142,55 @@ export async function updatePostMetrics(
   slug: string,
   { shares = 0, views = 0 }: { shares?: number; views?: number },
 ): Promise<BlogPost> {
+  const maxRetries = 3;
+  let lastError: Error | null = null;
+  
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const payloadInstance = await appGetPayload();
+      const res = await payloadInstance.find({
+        collection: BlogPostCollectionId,
+        where: { slug: { equals: slug } },
+      });
+      const post = res.docs[0];
+      if (!post) {
+        return res.docs[0];
+      }
+      const incrementMetrics = {
+        views: (post?.views || 0) + views,
+        shares: (post?.shares || 0) + shares,
+      };
+      const metricsTopPostScore = calculatePostMetrics({
+        views: incrementMetrics.views,
+        shares: incrementMetrics.shares,
+      });
+      await payloadInstance.update({
+        collection: BlogPostCollectionId,
+        where: { slug: { equals: slug } },
+        data: {
+          views: incrementMetrics.views,
+          shares: incrementMetrics.shares,
+          metricsTopPostScore,
+        },
+      });
+
+      return res.docs[0];
+    } catch (error) {
+      lastError = error as Error;
+      if ((error as Error).message?.includes('Transaction') || 
+          (error as Error).message?.includes('WriteConflict')) {
+        await new Promise(resolve => setTimeout(resolve, 100 * (attempt + 1)));
+        continue;
+      }
+      throw error;
+    }
+  }
+  
+  console.warn('Failed to update post metrics after retries:', lastError?.message);
   const payloadInstance = await appGetPayload();
   const res = await payloadInstance.find({
     collection: BlogPostCollectionId,
     where: { slug: { equals: slug } },
   });
-  const post = res.docs[0];
-  const incrementMetrics = {
-    views: (post?.views || 0) + views,
-    shares: (post?.shares || 0) + shares,
-  };
-  const metricsTopPostScore = calculatePostMetrics({
-    views: incrementMetrics.views,
-    shares: incrementMetrics.shares,
-  });
-  await payloadInstance.update({
-    collection: BlogPostCollectionId,
-    where: { slug: { equals: slug } },
-    data: {
-      views: incrementMetrics.views,
-      shares: incrementMetrics.shares,
-      metricsTopPostScore,
-    },
-  });
-
   return res.docs[0];
 }
