@@ -53,21 +53,24 @@ export const VisualConfigField: React.FC = () => {
   };
 
   const fieldStyle = {
-    backgroundColor: '#0d0d1a',
-    border: '1px solid #3a3a5c',
-    borderRadius: '6px',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '8px',
     padding: '8px 12px',
-    color: '#e0e0e0',
+    color: '#ffffff',
     fontSize: '14px',
     width: '100%',
     boxSizing: 'border-box' as const,
+    fontFamily: 'Inter, sans-serif',
+    transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
   };
 
   const labelStyle = {
-    color: '#888',
+    color: '#94a3b8',
     fontSize: '12px',
     marginBottom: '4px',
     display: 'block',
+    fontFamily: 'Inter, sans-serif',
   };
 
   const rowStyle = {
@@ -80,12 +83,22 @@ export const VisualConfigField: React.FC = () => {
     flex: 1,
   };
 
+  const hintStyle = {
+    color: '#64748b',
+    fontSize: '11px',
+    marginTop: '4px',
+    fontFamily: 'Inter, sans-serif',
+  };
+
   return (
     <div style={{
-      backgroundColor: '#1a1a2e',
-      borderRadius: '8px',
+      backgroundColor: 'rgba(255, 255, 255, 0.04)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '12px',
       padding: '16px',
       marginTop: '8px',
+      backdropFilter: 'blur(16px)',
+      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     }}>
       <div 
         onClick={() => setIsExpanded(!isExpanded)}
@@ -98,13 +111,14 @@ export const VisualConfigField: React.FC = () => {
         }}
       >
         <h3 style={{ 
-          color: '#00d4aa', 
+          color: '#3b82f6', 
           margin: 0,
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
           fontSize: '14px',
           fontWeight: 600,
+          fontFamily: 'Inter, sans-serif',
         }}>
           <span style={{ fontSize: '18px' }}>&#10024;</span>
           Visual Config
@@ -112,13 +126,15 @@ export const VisualConfigField: React.FC = () => {
         <button
           type="button"
           style={{
-            backgroundColor: 'transparent',
-            border: '1px solid #3a3a5c',
-            borderRadius: '6px',
-            color: '#888',
+            backgroundColor: isExpanded ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+            border: `1px solid ${isExpanded ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
+            borderRadius: '8px',
+            color: isExpanded ? '#f87171' : '#cbd5e1',
             padding: '6px 12px',
             cursor: 'pointer',
             fontSize: '12px',
+            transition: 'all 0.2s ease',
+            fontFamily: 'Inter, sans-serif',
           }}
         >
           {isExpanded ? '- Remove' : '+ Add Visual Config'}
@@ -162,7 +178,7 @@ export const VisualConfigField: React.FC = () => {
                 value={config.vibeKeywords}
                 onChange={(e) => updateConfig('vibeKeywords', e.target.value)}
               />
-              <span style={{ color: '#666', fontSize: '11px' }}>Comma-separated</span>
+              <span style={hintStyle}>Comma-separated</span>
             </div>
             <div style={colStyle}>
               <label style={labelStyle}>Emotional Tone</label>
@@ -173,7 +189,7 @@ export const VisualConfigField: React.FC = () => {
                 value={config.emotionalTone}
                 onChange={(e) => updateConfig('emotionalTone', e.target.value)}
               />
-              <span style={{ color: '#666', fontSize: '11px' }}>Comma-separated</span>
+              <span style={hintStyle}>Comma-separated</span>
             </div>
             <div style={colStyle}>
               <label style={labelStyle}>Animation Ideas</label>
@@ -184,24 +200,25 @@ export const VisualConfigField: React.FC = () => {
                 value={config.animationIdeas}
                 onChange={(e) => updateConfig('animationIdeas', e.target.value)}
               />
-              <span style={{ color: '#666', fontSize: '11px' }}>Comma-separated</span>
+              <span style={hintStyle}>Comma-separated</span>
             </div>
           </div>
 
           <div style={{ 
-            borderTop: '1px solid #3a3a5c', 
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)', 
             paddingTop: '16px',
             marginTop: '8px',
           }}>
             <p style={{ 
-              color: '#888', 
+              color: '#94a3b8', 
               fontSize: '12px', 
               marginBottom: '12px',
               display: 'flex',
               alignItems: 'center',
               gap: '4px',
+              fontFamily: 'Inter, sans-serif',
             }}>
-              <span>&#9632;</span> Motion Designer
+              <span style={{ color: '#3b82f6' }}>&#9632;</span> Motion Designer
             </p>
 
             <div style={rowStyle}>
@@ -216,7 +233,7 @@ export const VisualConfigField: React.FC = () => {
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
-                <span style={{ color: '#666', fontSize: '11px' }}>Primary animation style for page elements</span>
+                <span style={hintStyle}>Primary animation style for page elements</span>
               </div>
               <div style={colStyle}>
                 <label style={labelStyle}>Entrance Motion</label>
@@ -227,7 +244,7 @@ export const VisualConfigField: React.FC = () => {
                   value={config.entranceMotion}
                   onChange={(e) => updateConfig('entranceMotion', e.target.value)}
                 />
-                <span style={{ color: '#666', fontSize: '11px' }}>e.g., fadeUp, scaleIn, slideFromLeft</span>
+                <span style={hintStyle}>e.g., fadeUp, scaleIn, slideFromLeft</span>
               </div>
             </div>
 
@@ -241,7 +258,7 @@ export const VisualConfigField: React.FC = () => {
                   value={config.hoverMotion}
                   onChange={(e) => updateConfig('hoverMotion', e.target.value)}
                 />
-                <span style={{ color: '#666', fontSize: '11px' }}>e.g., hover.lift, hover.glow, hover.scale</span>
+                <span style={hintStyle}>e.g., hover.lift, hover.glow, hover.scale</span>
               </div>
               <div style={colStyle}>
                 <label style={labelStyle}>Ambient Motion</label>
@@ -252,12 +269,12 @@ export const VisualConfigField: React.FC = () => {
                   value={config.ambientMotion}
                   onChange={(e) => updateConfig('ambientMotion', e.target.value)}
                 />
-                <span style={{ color: '#666', fontSize: '11px' }}>e.g., ambient.float, ambient.shimmer</span>
+                <span style={hintStyle}>e.g., ambient.float, ambient.shimmer</span>
               </div>
             </div>
 
             <div style={{ 
-              borderTop: '1px solid #3a3a5c', 
+              borderTop: '1px solid rgba(255, 255, 255, 0.1)', 
               paddingTop: '16px',
               marginTop: '8px',
             }}>
@@ -268,28 +285,31 @@ export const VisualConfigField: React.FC = () => {
                 marginBottom: '12px',
               }}>
                 <p style={{ 
-                  color: '#888', 
+                  color: '#94a3b8', 
                   fontSize: '12px', 
                   margin: 0,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
+                  fontFamily: 'Inter, sans-serif',
                 }}>
-                  <span>&#128279;</span> ELEMENT MOTION LINKS
+                  <span style={{ color: '#60a5fa' }}>&#128279;</span> ELEMENT MOTION LINKS
                 </p>
                 <button
                   type="button"
                   style={{
-                    backgroundColor: 'transparent',
-                    border: '1px solid #3a3a5c',
-                    borderRadius: '6px',
-                    color: '#888',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    border: '1px solid rgba(37, 99, 235, 0.3)',
+                    borderRadius: '8px',
+                    color: '#60a5fa',
                     padding: '4px 8px',
                     cursor: 'pointer',
                     fontSize: '11px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
+                    transition: 'all 0.2s ease',
+                    fontFamily: 'Inter, sans-serif',
                   }}
                 >
                   <span>&#10024;</span> Auto-link
@@ -297,42 +317,34 @@ export const VisualConfigField: React.FC = () => {
               </div>
 
               <div style={{ display: 'flex', gap: '8px' }}>
-                <div style={{ 
-                  flex: 1, 
-                  padding: '8px 12px',
-                  backgroundColor: '#0d0d1a',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                  <span style={{ color: '#e0e0e0', fontSize: '13px' }}>Hero Section</span>
-                  <span style={{ color: '#666' }}>&#128279;</span>
-                </div>
-                <div style={{ 
-                  flex: 1, 
-                  padding: '8px 12px',
-                  backgroundColor: '#0d0d1a',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                  <span style={{ color: '#e0e0e0', fontSize: '13px' }}>Content Sections</span>
-                  <span style={{ color: '#666' }}>&#128279;</span>
-                </div>
-                <div style={{ 
-                  flex: 1, 
-                  padding: '8px 12px',
-                  backgroundColor: '#0d0d1a',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                  <span style={{ color: '#e0e0e0', fontSize: '13px' }}>Cards/Boxes</span>
-                  <span style={{ color: '#666' }}>&#128279;</span>
-                </div>
+                {['Hero Section', 'Content Sections', 'Cards/Boxes'].map((label, idx) => (
+                  <div 
+                    key={idx}
+                    style={{ 
+                      flex: 1, 
+                      padding: '8px 12px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(37, 99, 235, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                    }}
+                  >
+                    <span style={{ color: '#ffffff', fontSize: '13px', fontFamily: 'Inter, sans-serif' }}>{label}</span>
+                    <span style={{ color: '#64748b' }}>&#128279;</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

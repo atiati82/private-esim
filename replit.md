@@ -160,23 +160,31 @@ Dedicated PayloadCMS collection for AI-generated content with:
 - **AI Prompts**: Image prompts, video prompts, designer notes
 - **AI Page Builder**: Chat history, last prompt (sidebar)
 
-### Andara Design System
+### Quantum Design System (Updated December 2024)
 - **Theme**: PayloadCMS dark mode enabled via `payload.config.ts`
-- **Colors**: Deep blue/purple backgrounds (#0a0a14, #1a1a2e), teal accent (#00d4aa)
+- **Background**: Pure neutral blacks (neutral-950: #0a0a0a)
+- **Primary Accent**: Blue-600 (#2563eb), Blue-500 (#3b82f6)
+- **Text Colors**: White (#ffffff), Slate-300 (#cbd5e1), Slate-400 (#94a3b8)
+- **Borders**: white/10 (rgba(255,255,255,0.1))
+- **Effects**: backdrop-blur-xl, shadow-2xl
+- **Fonts**: Inter (UI text), Geist (headings), Geist Mono (code)
 - **Custom CSS**: Located at `src/app/(payload)/custom.scss` (PayloadCMS 3.x standard location)
-- **Custom Components**: AIPageBuilder, VisualConfigField with inline Andara styling
+- **Custom Components**: AIPageBuilder, VisualConfigField with inline Quantum styling
 
 ### Styling Implementation
-The Andara dark theme is applied through:
+The Quantum dark theme is applied through:
 1. **PayloadCMS Dark Mode**: Enabled in `payload.config.ts` with `admin.theme: 'dark'`
-2. **Custom SCSS**: `src/app/(payload)/custom.scss` overrides CSS variables for the Andara color palette
-3. **Inline Styles**: Custom React components (AIPageBuilder, VisualConfigField) use inline styles for the Andara design
+2. **Custom SCSS**: `src/app/(payload)/custom.scss` overrides CSS variables for the Quantum color palette
+3. **Inline Styles**: Custom React components (AIPageBuilder, VisualConfigField) use inline styles with Quantum design
+4. **Google Fonts**: Inter and Geist imported via @import in custom.scss
 
 Key CSS Variables:
-- `--theme-elevation-0`: #0a0a14 (deepest background)
-- `--theme-elevation-200`: #1a1a2e (card/panel background)
-- `--theme-success-500`: #00d4aa (teal accent color)
-- `--theme-warning-500`: #ff9500 (warning/missing badge color)
+- `--theme-elevation-0`: #0a0a0a (deepest background - pure neutral)
+- `--theme-elevation-200`: #171717 (card/panel background)
+- `--theme-success-500`: #2563eb (blue-600 accent color)
+- `--theme-warning-500`: #f59e0b (amber warning color)
+- `--quantum-blue`: #2563eb (primary accent)
+- `--quantum-slate-300`: #cbd5e1 (secondary text)
 
 ### API Endpoints
 - `POST /esim-api/ai-chat` - BigMind chat with function calling
