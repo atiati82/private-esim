@@ -10,6 +10,7 @@ export const howItWorksWrapper = style([
     gap: cssVal.space.l1,
     padding: `${cssVal.space.l2} 0`,
     textAlign: 'center',
+    background: 'transparent',
   },
 ]);
 

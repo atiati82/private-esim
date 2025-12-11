@@ -60,7 +60,7 @@ export const containerWithBorder = style(
   forThemeLayer({
     borderWidth: 1,
     borderRadius: cssVal.radii.medium,
-    borderColor: vars.color.border,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
   }),
 );
 

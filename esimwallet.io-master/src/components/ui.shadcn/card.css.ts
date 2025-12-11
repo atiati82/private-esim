@@ -16,19 +16,28 @@ export const cardVariants = recipe({
       'default': forCompLayer({
         'padding': cssVal.space.base,
         'borderWidth': 1,
-        'backgroundColor': vars.color.background,
-        'boxShadow': vars.shadow.card,
+        'borderColor': 'rgba(255, 255, 255, 0.08)',
+        'backgroundColor': 'rgba(23, 23, 23, 0.6)',
+        'backdropFilter': 'blur(12px)',
+        'WebkitBackdropFilter': 'blur(12px)',
+        'boxShadow': '0 4px 20px rgba(0, 0, 0, 0.3)',
         'borderRadius': cssVal.radii.medium,
+        'transition': 'all 0.3s ease',
         ':hover': {
-          borderColor: vars.color.primary.lighter,
+          borderColor: 'rgba(37, 99, 235, 0.4)',
+          boxShadow: '0 0 30px rgba(37, 99, 235, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4)',
         },
       }),
       'modal': forCompLayer({
         'marginLeft': 'auto',
         'marginRight': 'auto',
         'padding': cssVal.space.l1,
-        'backgroundColor': vars.color.background,
-        'boxShadow': vars.shadow.compact,
+        'backgroundColor': 'rgba(23, 23, 23, 0.9)',
+        'backdropFilter': 'blur(20px)',
+        'WebkitBackdropFilter': 'blur(20px)',
+        'borderColor': 'rgba(255, 255, 255, 0.1)',
+        'borderWidth': 1,
+        'boxShadow': '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
         'borderRadius': cssVal.radii.large,
         '@media': {
           [cssVal.screen.smAndSmaller]: {
@@ -44,8 +53,12 @@ export const cardVariants = recipe({
         'marginLeft': 'auto',
         'marginRight': 'auto',
         'padding': cssVal.space.l1,
-        'backgroundColor': vars.color.muted.default,
-        'boxShadow': vars.shadow.compact,
+        'backgroundColor': 'rgba(23, 23, 23, 0.7)',
+        'backdropFilter': 'blur(16px)',
+        'WebkitBackdropFilter': 'blur(16px)',
+        'borderColor': 'rgba(255, 255, 255, 0.08)',
+        'borderWidth': 1,
+        'boxShadow': '0 10px 25px -5px rgba(0, 0, 0, 0.4)',
         'borderRadius': cssVal.radii.large,
         '@media': {
           [cssVal.screen.smAndSmaller]: {

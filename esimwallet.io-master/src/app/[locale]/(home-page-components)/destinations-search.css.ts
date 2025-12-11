@@ -1,7 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
 import { cssVal } from '@/styles/css-values';
-import { lightThemeTokens } from '@/styles/theme.css';
 
 // mx-auto max-w-3xl bg-white p-2 md:p-3
 export const container = style([
@@ -62,5 +61,7 @@ export const searchInput = style({
 });
 
 globalStyle(`${popoverContent} .${searchInput}`, {
-  outline: `2px solid ${lightThemeTokens.color.primary.default}`,
+  outline: '2px solid rgba(37, 99, 235, 0.6)',
+  backgroundColor: 'rgba(23, 23, 23, 0.8)',
+  color: 'rgba(255, 255, 255, 0.9)',
 });

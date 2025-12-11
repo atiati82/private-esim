@@ -12,12 +12,12 @@ const LocalEsimsIndexPage: React.FC<RootPageArgs> = ({ params }) => {
   const { locale } = use(params);
   unstable_setRequestLocale(locale);
   return (
-    <div>
+    <main style={{ background: 'transparent', minHeight: '100vh' }}>
       <MainHero />
       <HomePageTabDestinations />
       <HomePageBitsAndPieces />
       <LatestPosts />
-    </div>
+    </main>
   );
 };
 export default LocalEsimsIndexPage;

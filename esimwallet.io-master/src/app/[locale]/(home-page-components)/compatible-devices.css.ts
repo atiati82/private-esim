@@ -9,7 +9,11 @@ export const compatibleDevicesWrapper = style([
   {
     flexDirection: 'column',
     gap: cssVal.space.l1,
-    background: vars.color.muted.default,
+    background: 'linear-gradient(180deg, rgba(10, 10, 10, 0.9) 0%, rgba(23, 23, 23, 0.7) 50%, rgba(10, 10, 10, 0.9) 100%)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
     textAlign: 'center',
     padding: `${cssVal.space.l2} 0`,
   },

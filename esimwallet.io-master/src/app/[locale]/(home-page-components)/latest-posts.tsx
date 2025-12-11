@@ -11,13 +11,15 @@ export const LatestPosts: React.FC = async () => {
   const { docs } = await findPosts(1, 3);
 
   return (
-    <div className={pageContainer}>
-      <HeadlineHero className={styles.headlineContainer} title="Latest Posts" />
-      <div className={styles.latestPostsContainer}>
-        {docs.map((post) => (
-          <BlogCard key={post.slug} post={post} />
-        ))}
+    <section className={styles.latestPostsSection}>
+      <div className={pageContainer}>
+        <HeadlineHero className={styles.headlineContainer} title="Latest Posts" />
+        <div className={styles.latestPostsContainer}>
+          {docs.map((post) => (
+            <BlogCard key={post.slug} post={post} />
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };

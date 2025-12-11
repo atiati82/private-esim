@@ -9,11 +9,19 @@ export const compatibleDevicesCardWrapper = style([
   {
     'flexDirection': 'column',
     'gap': cssVal.space.base,
-    'border': `1px solid ${vars.color.border}`,
+    'border': '1px solid rgba(255, 255, 255, 0.08)',
     'borderRadius': cssVal.radii.large,
     'margin': `${cssVal.space.s1} 0`,
     'padding': cssVal.space.l1,
-    'background': vars.color.background,
+    'background': 'rgba(23, 23, 23, 0.7)',
+    'backdropFilter': 'blur(16px)',
+    'WebkitBackdropFilter': 'blur(16px)',
+    'boxShadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.3)',
+    'transition': 'all 0.3s ease',
+    ':hover': {
+      borderColor: 'rgba(37, 99, 235, 0.4)',
+      boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(37, 99, 235, 0.15)',
+    },
     '@media': {
       [cssVal.screen.smAndSmaller]: {
         margin: `${cssVal.space.s1} ${cssVal.space.base}`,
@@ -23,15 +31,15 @@ export const compatibleDevicesCardWrapper = style([
 ]);
 
 export const compatibleDevicesCardIcon = style({
-  color: vars.color.primary.default,
-  fill: vars.color.primary.default,
+  color: 'rgba(37, 99, 235, 1)',
+  fill: 'rgba(37, 99, 235, 1)',
 });
 
 export const compatibleDevicesCardWrapperImage = style([
   flexContainerC,
   {
     gap: cssVal.space.l2,
-    background: vars.color.muted.default,
+    background: 'rgba(10, 10, 10, 0.5)',
     padding: `${cssVal.space.l1} ${cssVal.space.l2} 0`,
     borderRadius: cssVal.radii.default,
   },

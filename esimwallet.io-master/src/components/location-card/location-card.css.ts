@@ -9,19 +9,22 @@ import { forCompLayer } from '@/styles/utils';
 // Link wrapper for entire card
 export const wrapper = style(
   forCompLayer({
-    //flex h-12 items-center rounded-md border border-input bg-background px-3
-    // text-sm shadow hover:shadow-lg focus:outline-none focus:ring-1
-    // focus:ring-ring md:h-16 lg:h-20 lg:px-5 lg:text-lg [&>h3]:line-clamp-1
     'display': 'flex',
     'alignItems': 'center',
     'padding': cssVal.space.base,
     'width': cssVal.space.l6,
     'maxWidth': '100%',
     'borderWidth': 1,
+    'borderColor': 'rgba(255, 255, 255, 0.08)',
     'borderRadius': cssVal.radii.medium,
-    'backgroundColor': vars.color.muted.default,
+    'backgroundColor': 'rgba(23, 23, 23, 0.7)',
+    'backdropFilter': 'blur(16px)',
+    'WebkitBackdropFilter': 'blur(16px)',
+    'boxShadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.3)',
+    'transition': 'all 0.3s ease',
     ':hover': {
-      borderColor: vars.color.primary.lighter,
+      borderColor: 'rgba(37, 99, 235, 0.5)',
+      boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 25px rgba(37, 99, 235, 0.2)',
     },
     '@media': {
       [cssVal.screen.xsAndSmaller]: {
@@ -60,7 +63,7 @@ export const cardSubtitle = style([
   lineClamp1,
   forCompLayer({
     fontSize: cssVal.fontSize.sm,
-    color: vars.color.muted.foreground,
+    color: 'rgba(255, 255, 255, 0.6)',
     whiteSpace: 'nowrap',
   }),
 ]);

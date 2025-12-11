@@ -15,23 +15,28 @@ export const whyEsimWalletListWrapper = style([
 export const whyEsimWalletListContentInfo = style([
   flexContainerC,
   {
-    'background': vars.color.white,
+    'background': 'rgba(23, 23, 23, 0.7)',
+    'backdropFilter': 'blur(16px)',
+    'WebkitBackdropFilter': 'blur(16px)',
     'flexDirection': 'column',
     'gap': cssVal.space.s1,
     'padding': cssVal.space.l1,
-    'border': `1px solid ${vars.color.border}`,
+    'border': '1px solid rgba(255, 255, 255, 0.08)',
     'borderRadius': cssVal.radii.default,
+    'boxShadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.3)',
+    'transition': 'all 0.3s ease',
     ':hover': {
-      borderColor: vars.color.primary.lighter,
+      borderColor: 'rgba(37, 99, 235, 0.5)',
+      boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(37, 99, 235, 0.2)',
     },
   },
 ]);
 
 export const whyEsimWalletListContentIcon = style({
-  color: vars.color.primary.default,
+  color: 'rgba(37, 99, 235, 1)',
   marginBottom: '5px',
 });
 
 export const whyEsimWalletListContentDescription = style({
-  color: vars.color.muted.lighter,
+  color: 'rgba(255, 255, 255, 0.6)',
 });
