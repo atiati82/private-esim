@@ -214,6 +214,25 @@ export interface EsimProductDto {
   productFamily: string;
   productFamilyTopUpsCount?: number | null;
   usageTracking?: boolean | null;
+  aiGeneratedHtml?: string | null;
+  aiVisualConfig?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  aiImagePrompts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -259,6 +278,25 @@ export interface DestinationDto {
   keywords?: string | null;
   altIsoCodes?: string[] | null;
   parentDestination?: (string | null) | DestinationDto;
+  aiGeneratedHtml?: string | null;
+  aiVisualConfig?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  aiImagePrompts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -417,17 +455,37 @@ export interface BlogPost {
     [k: string]: unknown;
   };
   meta?: SeoMetaData;
-  featuredImage: string | MediaDto;
+  featuredImage?: (string | null) | MediaDto;
   markAsTopPost?: boolean | null;
   slug: string;
-  excerpt: string;
-  publishedDate: string;
-  author: string | UserDto;
+  excerpt?: string | null;
+  publishedDate?: string | null;
+  author?: (string | null) | UserDto;
   tags?: (string | BlogTag)[] | null;
   categories?: (string | BlogCategory)[] | null;
   views?: number | null;
   shares?: number | null;
   metricsTopPostScore?: number | null;
+  contentCluster?: ('blog' | 'support' | 'about' | 'legal') | null;
+  aiGeneratedHtml?: string | null;
+  aiVisualConfig?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  aiImagePrompts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -732,6 +790,9 @@ export interface EsimProductsSelect<T extends boolean = true> {
   productFamily?: T;
   productFamilyTopUpsCount?: T;
   usageTracking?: T;
+  aiGeneratedHtml?: T;
+  aiVisualConfig?: T;
+  aiImagePrompts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -759,6 +820,9 @@ export interface DestinationsSelect<T extends boolean = true> {
   keywords?: T;
   altIsoCodes?: T;
   parentDestination?: T;
+  aiGeneratedHtml?: T;
+  aiVisualConfig?: T;
+  aiImagePrompts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -848,6 +912,10 @@ export interface BlogPostsSelect<T extends boolean = true> {
   views?: T;
   shares?: T;
   metricsTopPostScore?: T;
+  contentCluster?: T;
+  aiGeneratedHtml?: T;
+  aiVisualConfig?: T;
+  aiImagePrompts?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

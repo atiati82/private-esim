@@ -143,6 +143,28 @@ export const DestinationsCollection: CollectionConfig = {
         },
       ],
     },
+    {
+      type: 'collapsible',
+      label: 'AI CMS (BigMind)',
+      admin: { initCollapsed: true },
+      fields: [
+        {
+          name: 'aiGeneratedHtml',
+          type: 'textarea',
+          admin: { description: 'AI-generated HTML content for destination page' },
+        },
+        {
+          name: 'aiVisualConfig',
+          type: 'json',
+          admin: { description: 'Motion and visual settings (JSON)' },
+        },
+        {
+          name: 'aiImagePrompts',
+          type: 'json',
+          admin: { description: 'Image generation prompts (JSON)' },
+        },
+      ],
+    },
   ],
   versions: {
     drafts: false,

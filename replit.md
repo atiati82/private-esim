@@ -111,3 +111,59 @@ Preferred communication style: Simple, everyday language.
 3. Configure required Stripe and reCAPTCHA credentials (optional for initial testing)
 4. Run: `cd esimwallet.io-master && pnpm next:dev -p 5000`
 5. After database connected, run `pnpm payload:import-mm` to import MobiMatter products
+
+## AI CMS System (BigMind) - December 2024
+
+### Overview
+AI-powered content management system integrated with PayloadCMS. Uses Replit AI Integrations (OpenAI) for content generation - no API keys required, charges billed to Replit credits.
+
+### Features
+- **BigMind Chat**: AI assistant with function calling for managing CMS content
+- **Magic Page Generator**: Converts text descriptions into complete pages with HTML, SEO, and visual config
+- **Motion Layout Engine**: 10 motion archetypes for animated page sections (Framer Motion)
+- **BigMind Response Parser**: Extracts structured data from AI responses
+- **Andara Page Renderer**: React component that renders AI-generated HTML with animations
+
+### AI CMS File Structure
+```
+src/ai-cms/
+├── index.ts                 # Main exports
+├── services/
+│   ├── ai-client.ts         # OpenAI client with function calling support
+│   ├── bigmind-cms.ts       # CMS manager with AI function tools
+│   └── payload-storage.ts   # PayloadCMS storage adapter
+├── lib/
+│   ├── bigmind-parser.ts    # AI response parser
+│   └── motion.ts            # Motion archetypes and animations
+└── components/
+    └── andara-page-renderer.tsx  # Animated page renderer
+```
+
+### API Endpoints
+- `POST /esim-api/ai-chat` - BigMind chat with function calling
+- `POST /esim-api/ai-generate` - Generate page content from topic
+
+### Motion Archetypes
+1. liquid-crystal-float - Soft floating movement
+2. energetic-pulse - Rhythmic pulsing
+3. magnetic-drift - Elements attract/repel
+4. krystal-bloom - Glow expansion
+5. scalar-slide - Linear acceleration
+6. vortex-reveal - Spiral staggered motion
+7. parallax-depth - Multi-layer scroll
+8. ripple-emergence - Wave-like reveal
+9. subtle-shimmer - Gentle brightness
+10. layered-parallax - 3D scroll effect
+
+### Content Clusters
+- destinations: Country and region eSIM pages
+- products: eSIM product and plan pages
+- blog: News, guides, and articles
+- support: FAQ, help, and support pages
+- about: Company information
+- legal: Terms, privacy, legal pages
+
+### Token Costs (Estimated)
+- Light use (10 pages/day): ~$3-10/month with GPT-4.1-mini
+- Heavy use (50 pages/day): ~$15-50/month
+- Uses Replit AI Integrations - billed to your Replit credits

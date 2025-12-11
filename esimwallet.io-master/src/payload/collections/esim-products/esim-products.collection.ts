@@ -395,6 +395,28 @@ export const EsimProductsCollection: CollectionConfig = {
       admin: { position: 'sidebar' },
       access: { ...accessReadOnly },
     },
+    {
+      type: 'collapsible',
+      label: 'AI CMS (BigMind)',
+      admin: { initCollapsed: true, position: 'sidebar' },
+      fields: [
+        {
+          name: 'aiGeneratedHtml',
+          type: 'textarea',
+          admin: { description: 'AI-generated HTML content for product page' },
+        },
+        {
+          name: 'aiVisualConfig',
+          type: 'json',
+          admin: { description: 'Motion and visual settings (JSON)' },
+        },
+        {
+          name: 'aiImagePrompts',
+          type: 'json',
+          admin: { description: 'Image generation prompts (JSON)' },
+        },
+      ],
+    },
   ],
   versions: {
     drafts: false,

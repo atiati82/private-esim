@@ -58,9 +58,10 @@ export const BlogPostsCollection: CollectionConfig = {
       name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
       admin: {
         position: 'sidebar',
+        description: 'Required for published posts. Optional for AI-generated drafts.',
       },
     },
     {
@@ -91,30 +92,33 @@ export const BlogPostsCollection: CollectionConfig = {
         {
           name: 'excerpt',
           type: 'textarea',
-          required: true,
+          required: false,
           label: 'Post Excerpt',
           admin: {
             position: 'sidebar',
+            description: 'Brief summary of the post',
           },
         },
         {
           name: 'publishedDate',
           type: 'date',
-          required: true,
+          required: false,
           admin: {
             position: 'sidebar',
             date: {
               displayFormat: 'dd-MM-yyyy HH:mm a',
             },
+            description: 'Auto-set when post is published',
           },
         },
         {
           name: 'author',
           type: 'relationship',
           relationTo: UsersCollectionId,
-          required: true,
+          required: false,
           admin: {
             position: 'sidebar',
+            description: 'Auto-set from current user if empty',
           },
         },
       ],
@@ -162,6 +166,40 @@ export const BlogPostsCollection: CollectionConfig = {
           name: 'metricsTopPostScore',
           type: 'number',
           defaultValue: 0,
+        },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'AI CMS (BigMind)',
+      admin: { initCollapsed: true, position: 'sidebar' },
+      fields: [
+        {
+          name: 'contentCluster',
+          type: 'select',
+          options: [
+            { label: 'Blog', value: 'blog' },
+            { label: 'Support', value: 'support' },
+            { label: 'About', value: 'about' },
+            { label: 'Legal', value: 'legal' },
+          ],
+          defaultValue: 'blog',
+          admin: { description: 'Content cluster for AI CMS routing' },
+        },
+        {
+          name: 'aiGeneratedHtml',
+          type: 'textarea',
+          admin: { description: 'AI-generated HTML content for rendering' },
+        },
+        {
+          name: 'aiVisualConfig',
+          type: 'json',
+          admin: { description: 'Motion and visual settings (JSON)' },
+        },
+        {
+          name: 'aiImagePrompts',
+          type: 'json',
+          admin: { description: 'Image generation prompts (JSON)' },
         },
       ],
     },
