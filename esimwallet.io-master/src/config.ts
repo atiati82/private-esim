@@ -39,8 +39,8 @@ export const cmsLocales: PayloadLocale[] = [
 //
 // Auth: initial user created on empty db. Also set to default auto-login on localhost
 //
-export const initDevUser = 'dev@esimwallet.io';
-export const initDevPassword = 'Abracadabra.369';
+export const initDevUser = 'admin@esimwallet.io';
+export const initDevPassword = 'admin';
 export const initUsersToCreate: Partial<UserDto>[] = [
   {
     email: 'editor@esimwallet.io',
