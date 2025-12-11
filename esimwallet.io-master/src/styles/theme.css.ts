@@ -1,7 +1,7 @@
 import { createThemeContract } from '@vanilla-extract/css';
 
 import { hslVal } from '@/styles/utils';
-import { primary, secondary, successPalette, tertiary } from '@/styles/utils/colors';
+import { primary, secondary, successPalette, tertiary, quantumNeutral, quantumBlue, quantumSlate } from '@/styles/utils/colors';
 
 const baseColors = {
   white: 'hsl(0, 0%, 100%)',
@@ -19,6 +19,27 @@ const baseColors = {
   foregroundAccent: primary[900],
 
   border: secondary[150],
+};
+
+/**
+ * Quantum Dark Theme base colors
+ */
+const quantumBaseColors = {
+  white: 'hsl(0, 0%, 100%)',
+  /**
+   * Quantum dark background - neutral-950
+   */
+  background: quantumNeutral[950],
+
+  black: quantumNeutral[950],
+  /**
+   * Quantum text - white
+   */
+  foreground: 'hsl(0, 0%, 100%)',
+  foregroundHsl: '0, 0%, 100%',
+  foregroundAccent: quantumBlue[400],
+
+  border: 'hsla(0, 0%, 100%, 0.1)', // white/10
 };
 
 export const lightThemeTokens = {
@@ -101,6 +122,78 @@ export const lightThemeTokens = {
      * Compact / small shadow. Used e.g. in popover content
      */
     compact: `1px 1px 10px 1px hsla(${hslVal(baseColors.black)}, .15)`,
+  },
+} as const;
+
+/**
+ * Quantum Dark Theme Tokens
+ * Based on the Quantum Animation Builder design system
+ */
+export const quantumDarkThemeTokens = {
+  color: {
+    ...quantumBaseColors,
+
+    primary: {
+      /**
+       * Primary: Quantum blue-600 accent
+       */
+      default: quantumBlue['600'], // #2563eb
+      darker: quantumBlue['700'],
+      lighter: quantumBlue['500'], // #3b82f6
+      foreground: 'hsl(0, 0%, 100%)', // white text on blue
+    },
+
+    secondary: {
+      /**
+       * Secondary: subtle white/5 background
+       */
+      default: 'hsla(0, 0%, 100%, 0.05)', // white/5
+      darker: 'hsla(0, 0%, 100%, 0.1)', // white/10
+      foreground: 'hsl(0, 0%, 100%)',
+    },
+
+    muted: {
+      /**
+       * Muted backgrounds and text for dark theme
+       */
+      default: quantumNeutral['900'],
+      foreground: quantumSlate['300'], // #cbd5e1
+      lighter: quantumSlate['400'], // #94a3b8
+    },
+
+    accent: {
+      /**
+       * Accent colors - blue tints
+       */
+      default: 'hsla(221, 83%, 53%, 0.15)', // blue-600/15
+      lighter: 'hsla(221, 83%, 53%, 0.1)', // blue-600/10
+      foreground: quantumBlue['400'],
+    },
+
+    destructive: {
+      default: 'hsl(0, 84%, 60%)', // red-500
+      darker: 'hsl(0, 72%, 51%)', // red-600
+      lighter: 'hsl(0, 91%, 71%)', // red-400
+      foreground: 'hsl(0, 0%, 100%)',
+    },
+
+    warning: {
+      default: 'hsl(45, 93%, 47%)', // amber-500
+      foreground: 'hsl(38, 92%, 50%)', // amber-500
+    },
+
+    success: {
+      default: 'hsla(142, 76%, 36%, 0.2)', // green-600/20
+      foreground: 'hsl(142, 71%, 45%)', // green-500
+    },
+  },
+
+  shadow: {
+    /**
+     * Quantum shadow - more dramatic for dark theme
+     */
+    card: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+    compact: '0 10px 25px -5px rgba(0, 0, 0, 0.4)',
   },
 } as const;
 
