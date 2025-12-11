@@ -8,3 +8,4 @@ export const UsersCollectionId = 'users';
 export const BlogPostCollectionId = 'blog-posts';
 export const BlogCategoriesCollectionId = 'blog-categories';
 export const BlogTagsCollectionId = 'blog-tags';
+export const AiPagesCollectionId = 'ai-pages';

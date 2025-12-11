@@ -23,6 +23,7 @@ export interface Config {
     'blog-posts': BlogPost;
     'blog-categories': BlogCategory;
     'blog-tags': BlogTag;
+    'ai-pages': AiPage;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -45,6 +46,7 @@ export interface Config {
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'blog-tags': BlogTagsSelect<false> | BlogTagsSelect<true>;
+    'ai-pages': AiPagesSelect<false> | AiPagesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -522,6 +524,102 @@ export interface BlogCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-pages".
+ */
+export interface AiPage {
+  id: string;
+  title: string;
+  key: string;
+  urlPath: string;
+  pageType?: ('standard' | 'landing' | 'article' | 'product' | 'destination') | null;
+  template?: ('default' | 'pillar-overview' | 'blog-article' | 'faq' | 'comparison' | 'hero-landing') | null;
+  status?: ('draft' | 'published' | 'scheduled' | 'archived') | null;
+  parentPage?: (string | null) | AiPage;
+  contentCluster?: ('blog' | 'support' | 'about' | 'legal' | 'science' | 'products' | 'destinations') | null;
+  priority?: number | null;
+  summary?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  rawHtmlContent?: string | null;
+  seoFocusKeyword?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  featuredImageUrl?: string | null;
+  aiImagePrompt?: string | null;
+  aiVideoPrompt?: string | null;
+  designerNotes?: string | null;
+  visualPriority?: ('p1' | 'p2' | 'p3') | null;
+  visualCluster?: string | null;
+  vibeKeywords?: string | null;
+  emotionalTone?: string | null;
+  animationIdeas?: string | null;
+  motionPreset?:
+    | (
+        | 'none'
+        | 'liquid-crystal-float'
+        | 'energetic-pulse'
+        | 'magnetic-drift'
+        | 'krystal-bloom'
+        | 'scalar-slide'
+        | 'vortex-reveal'
+        | 'parallax-depth'
+        | 'ripple-emergence'
+        | 'subtle-shimmer'
+        | 'layered-parallax'
+      )
+    | null;
+  entranceMotion?: string | null;
+  hoverMotion?: string | null;
+  ambientMotion?: string | null;
+  heroSectionMotion?: string | null;
+  contentSectionsMotion?: string | null;
+  cardsBoxesMotion?: string | null;
+  pageIcon?: string | null;
+  mediaGallery?:
+    | {
+        mediaUrl?: string | null;
+        mediaType?: ('image' | 'video') | null;
+        altText?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  aiChatHistory?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  aiLastPrompt?: string | null;
+  publishedAt?: string | null;
+  internalLinks?: (string | AiPage)[] | null;
+  externalLinks?:
+    | {
+        url?: string | null;
+        anchorText?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -574,6 +672,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog-tags';
         value: string | BlogTag;
+      } | null)
+    | ({
+        relationTo: 'ai-pages';
+        value: string | AiPage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -936,6 +1038,65 @@ export interface BlogCategoriesSelect<T extends boolean = true> {
  */
 export interface BlogTagsSelect<T extends boolean = true> {
   tag?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-pages_select".
+ */
+export interface AiPagesSelect<T extends boolean = true> {
+  title?: T;
+  key?: T;
+  urlPath?: T;
+  pageType?: T;
+  template?: T;
+  status?: T;
+  parentPage?: T;
+  contentCluster?: T;
+  priority?: T;
+  summary?: T;
+  content?: T;
+  rawHtmlContent?: T;
+  seoFocusKeyword?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  featuredImageUrl?: T;
+  aiImagePrompt?: T;
+  aiVideoPrompt?: T;
+  designerNotes?: T;
+  visualPriority?: T;
+  visualCluster?: T;
+  vibeKeywords?: T;
+  emotionalTone?: T;
+  animationIdeas?: T;
+  motionPreset?: T;
+  entranceMotion?: T;
+  hoverMotion?: T;
+  ambientMotion?: T;
+  heroSectionMotion?: T;
+  contentSectionsMotion?: T;
+  cardsBoxesMotion?: T;
+  pageIcon?: T;
+  mediaGallery?:
+    | T
+    | {
+        mediaUrl?: T;
+        mediaType?: T;
+        altText?: T;
+        id?: T;
+      };
+  aiChatHistory?: T;
+  aiLastPrompt?: T;
+  publishedAt?: T;
+  internalLinks?: T;
+  externalLinks?:
+    | T
+    | {
+        url?: T;
+        anchorText?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

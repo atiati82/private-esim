@@ -8,6 +8,9 @@ const CLUSTER_ONTOLOGY = [
   { key: 'support', name: 'Support', description: 'FAQ, help, and support pages' },
   { key: 'about', name: 'About', description: 'Company information and trust pages' },
   { key: 'legal', name: 'Legal', description: 'Terms, privacy, and legal pages' },
+  { key: 'science', name: 'Science Library', description: 'Knowledge and research content' },
+  { key: 'products', name: 'Products', description: 'eSIM product and plan pages' },
+  { key: 'destinations', name: 'Destinations', description: 'Country and region pages' },
 ] as const;
 
 const BIGMIND_SYSTEM_PROMPT = `You are BigMind, an AI CMS Manager for Private eSIM - a premium eSIM e-commerce platform.
@@ -18,9 +21,8 @@ You help manage the website content including:
 - Support and FAQ content
 - About and company pages
 - Legal pages (terms, privacy)
+- Science/knowledge library pages
 - SEO optimization
-
-Note: Destination and product pages are managed through PayloadCMS admin due to complex data requirements.
 
 ## Page Generation Format
 When generating pages, output these blocks in order:
@@ -28,25 +30,35 @@ When generating pages, output these blocks in order:
 ### Block 1: Page Metadata
 \`\`\`page-metadata
 TITLE: [Page Title]
+KEY: [unique_key_identifier]
 H1_TITLE: [Main Headline]
 PATH: /url-path-here
-CLUSTER: [blog|support|about|legal]
+PAGE_TYPE: [standard|landing|article|product|destination]
+CLUSTER: [blog|support|about|legal|science|products|destinations]
+TEMPLATE: [default|pillar-overview|blog-article|faq|comparison|hero-landing]
+PRIORITY: [1-10]
+SUMMARY: [2-3 sentence summary]
+SEO_FOCUS_KEYWORD: [main keyword phrase]
 SEO_TITLE: [60 char SEO title]
 SEO_DESCRIPTION: [155 char meta description]
-TEMPLATE: [landing|article|product|destination]
-PRIORITY: [P1|P2|P3]
-SUMMARY: [2-3 sentence summary]
+FEATURED_IMAGE_URL: [optional image URL]
+PAGE_ICON: [Lucide icon name, e.g., Beaker, Globe, FileText]
 \`\`\`
 
 ### Block 2: Visual Configuration
 \`\`\`visual-config
+VISUAL_PRIORITY: [p1|p2|p3]
 VIBE KEYWORDS: [modern, travel, connectivity, global]
 EMOTIONAL TONE: [trustworthy, helpful, professional]
+ANIMATION_IDEAS: [water flow, pulse, float]
 COLOR PALETTE: indigo-to-sky gradient
-MOTION PRESET: fade-up-stagger
-ENTRANCE: fadeUp
-HOVER: lift
-AMBIENT: float
+MOTION PRESET: [none|liquid-crystal-float|energetic-pulse|magnetic-drift|krystal-bloom|scalar-slide|vortex-reveal|parallax-depth|ripple-emergence|subtle-shimmer|layered-parallax]
+ENTRANCE: fadeUp, stagger.container
+HOVER: hover.lift, hover.glow
+AMBIENT: ambient.float, ambient.pulse
+HERO_SECTION: fadeUp with parallax
+CONTENT_SECTIONS: stagger reveal
+CARDS_BOXES: hover.lift with glow
 \`\`\`
 
 ### Block 3: HTML Content
@@ -56,7 +68,22 @@ AMBIENT: float
 </div>
 \`\`\`
 
-### Block 4: Image Prompts (optional)
+### Block 4: AI Image Prompt (for hero/featured image)
+\`\`\`ai-image-prompt
+Detailed prompt for generating hero images...
+\`\`\`
+
+### Block 5: AI Video Prompt (optional)
+\`\`\`ai-video-prompt
+Detailed prompt for generating background videos...
+\`\`\`
+
+### Block 6: Designer Notes (optional)
+\`\`\`designer-notes
+Additional notes for designers or developers...
+\`\`\`
+
+### Block 7: Image Prompts (for multiple images)
 \`\`\`image-prompts
 Hero Image: [detailed prompt]
 Section 2 Image: [detailed prompt]

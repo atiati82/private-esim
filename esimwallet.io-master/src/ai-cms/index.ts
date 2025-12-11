@@ -7,6 +7,9 @@ export type { CMSStorage } from './services/bigmind-cms';
 export { parseBigMindResponse, generateSlugFromTitle } from './lib/bigmind-parser';
 export type { ParsedBigMindResponse } from './lib/bigmind-parser';
 
+export { createAiPagesStorage, parsedResponseToPageData } from './services/ai-pages-storage';
+export { createPayloadStorage, type AIGeneratedContent } from './services/payload-storage';
+
 export {
   motionTiming,
   motionEasing,

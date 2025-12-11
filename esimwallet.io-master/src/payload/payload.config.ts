@@ -17,6 +17,7 @@ import {
   EsimProvidersCollectionId,
   MediaCollectionId,
 } from '@/payload/collections';
+import { AiPagesCollection } from '@/payload/collections/ai-pages/ai-pages.collection';
 import { BlogCategoriesCollection } from '@/payload/collections/blog/blog-categories.collection';
 import { BlogPostsCollection } from '@/payload/collections/blog/blog-posts.collection';
 import { BlogTagsCollection } from '@/payload/collections/blog/blog-tags.collection';
@@ -51,12 +52,14 @@ const payloadConfig: Config = {
         : false,
     livePreview: {
       url: process.env.NEXT_PUBLIC_WEBSITE_URL || '',
-      collections: [BlogPostCollectionId], // The collections to enable Live Preview on (globals are also possible)
+      collections: [BlogPostCollectionId],
     },
     importMap: {
       baseDir: path.resolve(path.dirname('src')),
-      autoGenerate: false, // It's too noisy in the log, that auto-generation. Use `pnpm payload:generate` on demand instead
+      autoGenerate: false,
     },
+    theme: 'dark',
+    css: path.resolve(path.dirname('src'), 'payload/admin/custom.css'),
   },
   collections: [
     // Group: Default
@@ -75,6 +78,8 @@ const payloadConfig: Config = {
     BlogPostsCollection,
     BlogCategoriesCollection,
     BlogTagsCollection,
+    // Group: AI CMS
+    AiPagesCollection,
   ],
   globals: [EsimProductsContentCollection],
   routes: {

@@ -1,29 +1,41 @@
 export interface ParsedBigMindResponse {
   pageMetadata: {
     title?: string;
+    key?: string;
     h1Title?: string;
     path?: string;
     urlSlug?: string;
     cluster?: string;
-    metaTitle?: string;
-    metaDescription?: string;
-    seoFocus?: string;
-    seoKeywords?: string[];
+    pageType?: string;
     template?: string;
     priority?: string;
     summary?: string;
+    metaTitle?: string;
+    metaDescription?: string;
+    seoFocusKeyword?: string;
+    seoKeywords?: string[];
+    featuredImageUrl?: string;
+    pageIcon?: string;
   };
   visualConfig: {
+    visualPriority?: string;
     vibeKeywords?: string[];
     emotionalTone?: string[];
+    animationIdeas?: string[];
     colorPalette?: string;
     layoutsDetected?: string[];
     motionPreset?: string;
     entranceMotion?: string;
     hoverMotion?: string;
     ambientMotion?: string;
+    heroSectionMotion?: string;
+    contentSectionsMotion?: string;
+    cardsBoxesMotion?: string;
   };
   htmlContent?: string;
+  aiImagePrompt?: string;
+  aiVideoPrompt?: string;
+  designerNotes?: string;
   imagePrompts: Array<{
     id: string;
     slotKey: string;
@@ -95,6 +107,21 @@ export function parseBigMindResponse(rawContent: string): ParsedBigMindResponse 
     
     const summaryMatch = metaText.match(/SUMMARY:\s*(.+)/i);
     if (summaryMatch) result.pageMetadata.summary = summaryMatch[1].trim();
+    
+    const keyMatch = metaText.match(/KEY:\s*(.+)/i);
+    if (keyMatch) result.pageMetadata.key = keyMatch[1].trim();
+    
+    const pageTypeMatch = metaText.match(/PAGE_TYPE:\s*(.+)/i);
+    if (pageTypeMatch) result.pageMetadata.pageType = pageTypeMatch[1].trim();
+    
+    const seoFocusMatch = metaText.match(/SEO_FOCUS(?:_KEYWORD)?:\s*(.+)/i);
+    if (seoFocusMatch) result.pageMetadata.seoFocusKeyword = seoFocusMatch[1].trim();
+    
+    const featuredImgMatch = metaText.match(/FEATURED_IMAGE(?:_URL)?:\s*(.+)/i);
+    if (featuredImgMatch) result.pageMetadata.featuredImageUrl = featuredImgMatch[1].trim();
+    
+    const iconMatch = metaText.match(/PAGE_ICON:\s*(.+)/i);
+    if (iconMatch) result.pageMetadata.pageIcon = iconMatch[1].trim();
   }
 
   const visualConfigMatch = content.match(/```visual-config\n([\s\S]*?)```/);
@@ -125,6 +152,23 @@ export function parseBigMindResponse(rawContent: string): ParsedBigMindResponse 
     
     const ambientMatch = configText.match(/AMBIENT:\s*([^\n]+)/i);
     if (ambientMatch) result.visualConfig.ambientMotion = ambientMatch[1].trim();
+    
+    const visualPriorityMatch = configText.match(/VISUAL_PRIORITY:\s*([^\n]+)/i);
+    if (visualPriorityMatch) result.visualConfig.visualPriority = visualPriorityMatch[1].trim();
+    
+    const animationIdeasMatch = configText.match(/ANIMATION_IDEAS:\s*\[?([^\]\n]+)\]?/i);
+    if (animationIdeasMatch) {
+      result.visualConfig.animationIdeas = animationIdeasMatch[1].split(',').map(s => s.trim()).filter(Boolean);
+    }
+    
+    const heroMotionMatch = configText.match(/HERO_SECTION:\s*([^\n]+)/i);
+    if (heroMotionMatch) result.visualConfig.heroSectionMotion = heroMotionMatch[1].trim();
+    
+    const contentMotionMatch = configText.match(/CONTENT_SECTIONS:\s*([^\n]+)/i);
+    if (contentMotionMatch) result.visualConfig.contentSectionsMotion = contentMotionMatch[1].trim();
+    
+    const cardsMotionMatch = configText.match(/CARDS_BOXES:\s*([^\n]+)/i);
+    if (cardsMotionMatch) result.visualConfig.cardsBoxesMotion = cardsMotionMatch[1].trim();
   }
 
   const htmlMatch = content.match(/```html\n([\s\S]*?)```/) ||
@@ -167,6 +211,21 @@ export function parseBigMindResponse(rawContent: string): ParsedBigMindResponse 
         });
       }
     }
+  }
+
+  const aiImagePromptMatch = content.match(/```ai-image-prompt\n([\s\S]*?)```/);
+  if (aiImagePromptMatch) {
+    result.aiImagePrompt = aiImagePromptMatch[1].trim();
+  }
+  
+  const aiVideoPromptMatch = content.match(/```ai-video-prompt\n([\s\S]*?)```/);
+  if (aiVideoPromptMatch) {
+    result.aiVideoPrompt = aiVideoPromptMatch[1].trim();
+  }
+  
+  const designerNotesMatch = content.match(/```designer-notes\n([\s\S]*?)```/);
+  if (designerNotesMatch) {
+    result.designerNotes = designerNotesMatch[1].trim();
   }
 
   return result;
