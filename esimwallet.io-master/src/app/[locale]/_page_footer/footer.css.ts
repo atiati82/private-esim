@@ -3,138 +3,96 @@ import { style } from '@vanilla-extract/css';
 import { cssVal } from '@/styles/css-values';
 import { pageContainer } from '@/styles/layout.css';
 import { vars } from '@/styles/theme.css';
-import { quantumNeutral, quantumBlue } from '@/styles/utils/colors';
+import { quantumBlue, quantumSlate } from '@/styles/utils/colors';
 
 export const footerWrapper = style({
-  backgroundColor: 'rgba(10, 10, 10, 0.7)',
-  backgroundImage: `linear-gradient(180deg, rgba(23, 23, 23, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%)`,
+  backgroundColor: 'rgba(10, 10, 10, 0.8)',
+  backgroundImage: 'linear-gradient(180deg, rgba(23, 23, 23, 0.6) 0%, rgba(10, 10, 10, 0.9) 100%)',
   backdropFilter: 'blur(24px) saturate(180%)',
   WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-  position: 'sticky',
-  top: '100%',
+  borderTop: `1px solid ${vars.color.border}`,
+  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.03)',
   marginTop: cssVal.space.l2,
-  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 -4px 30px rgba(0, 0, 0, 0.3)',
 });
 
 export const footerContainer = style([
   pageContainer,
   {
-    'paddingTop': cssVal.space.l1,
-    'paddingBottom': cssVal.space.l1,
-    'color': vars.color.white,
-    'alignItems': 'start',
-    'display': 'grid',
-    'gridTemplateColumns': 'repeat(3, 1fr)',
-    'gridTemplateRows': 'auto auto 1fr',
-    'gap': `${cssVal.space.s2}`,
-    'gridAutoRows': 'minmax(auto, 1fr)',
-    'gridTemplateAreas': `
-        "logo logo contact"
-        "explore-esim legal customer-care"
-      `,
-    '@media': {
-      [cssVal.screen.md]: {},
-      [cssVal.screen.lg]: {
-        paddingTop: cssVal.space.l2,
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gridTemplateAreas: `
-          "logo logo explore-esim legal customer-care"
-          "logo logo explore-esim legal contact"
-        `,
-      },
-      [cssVal.screen.smAndSmaller]: {
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gridTemplateAreas: `
-          "logo logo"
-          "explore-esim customer-care"
-          "explore-esim contact"
-          "legal ."
-        `,
-      },
-    },
-  },
-]);
-
-// logo
-
-// explore section
-export const footerExploreESIMwallet = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gridArea: 'explore-esim',
-  marginTop: cssVal.space.s1,
-});
-
-//customer care
-export const footerCustomerCareSection = style({
-  display: 'flex',
-  flexDirection: 'column',
-  fontSize: cssVal.fontSize.sm,
-  gridArea: 'customer-care',
-  marginTop: cssVal.space.s1,
-});
-
-// legal
-export const footerLegalSection = style({
-  display: 'flex',
-  flexDirection: 'column',
-  fontSize: cssVal.fontSize.sm,
-  gridArea: 'legal',
-  marginTop: cssVal.space.s1,
-});
-
-// contact
-export const footerContactSection = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gridArea: 'contact',
-  marginTop: cssVal.space.s1,
-});
-
-// copyrights
-export const footerCopyrightsWrapper = style({
-  paddingTop: cssVal.space.base,
-  paddingBottom: cssVal.space.base,
-  borderTop: '1px solid rgba(255, 255, 255, 0.06)',
-  backgroundColor: 'rgba(0, 0, 0, 0.3)',
-});
-export const footerCopyrights = style([
-  pageContainer,
-  {
+    'paddingTop': cssVal.space.base,
+    'paddingBottom': cssVal.space.base,
     'display': 'flex',
-    'alignItems': 'center',
-    'justifyContent': 'space-between',
-    'color': vars.color.white,
-    'fontSize': cssVal.fontSize.xs,
-    'fontWeight': cssVal.fontWeight.light,
+    'flexDirection': 'column',
+    'gap': cssVal.space.s2,
     '@media': {
-      [cssVal.screen.smAndSmaller]: {
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        gap: cssVal.space.s1,
+      [cssVal.screen.md]: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       },
     },
   },
 ]);
 
-export const footerCopyrightsSocialWrapper = style({
-  display: 'flex',
-  gap: cssVal.space.s1,
+export const footerLinksRow = style({
+  'display': 'flex',
+  'flexWrap': 'wrap',
+  'alignItems': 'center',
+  'gap': cssVal.space.s2,
+  '@media': {
+    [cssVal.screen.smAndSmaller]: {
+      justifyContent: 'center',
+    },
+  },
 });
 
-export const footerCopyrightsSocialList = style({
+export const footerLink = style({
+  'color': quantumSlate['400'],
+  'fontSize': cssVal.fontSize.xs,
+  'textDecoration': 'none',
+  'transition': 'color 0.2s ease',
+  ':hover': {
+    color: quantumBlue['500'],
+  },
+});
+
+export const footerDivider = style({
+  color: vars.color.border,
+  fontSize: cssVal.fontSize.xs,
+  userSelect: 'none',
+});
+
+export const footerRight = style({
+  'display': 'flex',
+  'alignItems': 'center',
+  'gap': cssVal.space.base,
+  '@media': {
+    [cssVal.screen.smAndSmaller]: {
+      flexDirection: 'column',
+      gap: cssVal.space.s2,
+    },
+  },
+});
+
+export const footerSocialList = style({
   display: 'flex',
   alignItems: 'center',
-  gap: cssVal.space.s1,
+  gap: cssVal.space.s2,
 });
 
-// icon
 export const footerIconSocialLink = style({
-  'color': vars.color.white,
-  'opacity': 0.7,
+  'color': quantumSlate['500'],
+  'transition': 'color 0.2s ease',
   ':hover': {
-    color: vars.color.white,
-    opacity: 1,
+    color: quantumBlue['500'],
+  },
+});
+
+export const footerCopyright = style({
+  'color': quantumSlate['500'],
+  'fontSize': cssVal.fontSize.xs,
+  '@media': {
+    [cssVal.screen.smAndSmaller]: {
+      textAlign: 'center',
+    },
   },
 });
