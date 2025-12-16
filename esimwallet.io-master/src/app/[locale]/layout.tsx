@@ -7,8 +7,8 @@ import '@/styles/app-global.css'; // import BEFORE! any of our components, to ha
 import { RouterWatcher } from '@/data-store/router/RouterWatcher';
 import { StoreProvider } from '@/data-store/StoreProvider';
 import { isFullBuild, isProduction } from '@/env-helpers';
-import { defaultLocale, siteLocales } from '@/i18n/routing';
-import { RootLayoutArgs, RootPageParams } from '@/lib/types';
+import { defaultLocale, siteLocales, type Locale } from '@/i18n/routing';
+import { RootPageParams } from '@/lib/types';
 
 import { GTMHeadScript, GTMNoScript } from '@/app-analytics/gtm/gtm-scripts';
 import { Footer } from '@/app/[locale]/_page_footer/footer';
@@ -25,9 +25,14 @@ export function generateStaticParams(): RootPageParams[] {
 
 export { generateMetadata };
 
-const RootLayout: React.FC<RootLayoutArgs> = ({ children, params }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}
+
+const RootLayout: React.FC<LayoutProps> = ({ children, params }) => {
   const { locale } = use(params);
-  unstable_setRequestLocale(locale);
+  unstable_setRequestLocale(locale as Locale);
 
   return (
     <html lang={locale} className={fontSatoshi.variable}>

@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css';
 
 import { cssVal } from '@/styles/css-values';
 import { flexContainer, gridNarrow12Cols, pageContainer } from '@/styles/layout.css';
-import { vars } from '@/styles/theme.css';
 import { rem } from '@/styles/utils';
 
 export const howItWorksListWrapper = style([

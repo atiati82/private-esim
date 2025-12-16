@@ -11,8 +11,8 @@ export const WhyEsimwallet: React.FC = () => {
     <div className={styles.whyEsimWalletWrapper}>
       <Headline like="h1">Why Choose Private eSIM</Headline>
       <Textual variant="muted" className={styles.whyEsimWalletSubtitle}>
-        Private eSIM is your go-to solution for effortless global connectivity and you can switch and
-        manage mobile networks easily wherever you are.
+        Private eSIM is your go-to solution for effortless global connectivity and you can switch
+        and manage mobile networks easily wherever you are.
       </Textual>
       <WhyEsimwalletList items={WhyEsimwalletData} />
     </div>

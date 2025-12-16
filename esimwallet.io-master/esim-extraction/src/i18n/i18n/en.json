@@ -1,0 +1,24 @@
+{
+  "Index": {
+    "welcome": "Seamlessly Connect to Global Networks with Private eSIM",
+    "welcome2": "Enjoy uninterrupted internet on every adventure and save on costly roaming charges.",
+    "welcomeForTest": "test"
+  },
+  "IndexHero": {
+    "tab-local-esims": "Local",
+    "tab-region-esims": "Regional",
+    "tab-global-esims": "Global"
+  },
+  "Account": {
+    "Verify": {
+      "verifyTitle": "Account verified",
+      "verifySuccessMessage": "Thank you, your account has been verified successfully. You can start using it now.",
+      "verifyErrorTitle": "There was a problem with verifying your account",
+      "verifyErrorUnknown": "Unknown error occurred while verifying your account. Reload the page to try again. If error repeats, contact our Customer Support.",
+      "invalidToken": "Error: Invalid verification token received.",
+      "tokenNotFound": "We couldn't find an account with this verification token. Please ensure the entire verification link has been pasted from the sent e-mail message.",
+      "tokenNotFound2": "It is also possible that the account has been already verified and it's ready to be used.",
+      "logInHere": "Click here to Log In"
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import { getRequestConfig } from 'next-intl/server';
-import { notFound } from 'next/navigation';
 import merge from 'lodash/merge';
 
 import { defaultLocale, Locale, siteLocales } from './routing';
@@ -22,12 +21,17 @@ export async function loadMessagesWithFallback(locale: Locale): Promise<IntlMess
   return merge({}, defaultMessages, messages);
 }
 
-const createRequestConfig = async ({ locale }: { locale: string }): Promise<RequestConfig> => {
-  if (!siteLocales.includes(locale as Locale)) {
-    return notFound();
+const createRequestConfig = async ({ requestLocale }: { requestLocale: Promise<string | undefined> }): Promise<RequestConfig & { locale: string }> => {
+  let locale = await requestLocale;
+
+  if (!locale || !siteLocales.includes(locale as Locale)) {
+    locale = defaultLocale;
   }
 
-  return { messages: await loadMessagesWithFallback(locale as Locale) };
+  return {
+    locale,
+    messages: await loadMessagesWithFallback(locale as Locale)
+  };
 };
 
 export default getRequestConfig(createRequestConfig);

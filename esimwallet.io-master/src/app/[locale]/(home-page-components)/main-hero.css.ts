@@ -1,4 +1,4 @@
-import { style, keyframes } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 import { cssVal } from '@/styles/css-values';
 import { pageContainer, spaceBetween } from '@/styles/layout.css';
@@ -18,7 +18,8 @@ const pulseGlow = keyframes({
 export const heroWrapper = style({
   'position': 'relative',
   'height': 'auto',
-  'background': 'linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 7%) 50%, hsl(0, 0%, 4%) 100%)',
+  'background':
+    'linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 7%) 50%, hsl(0, 0%, 4%) 100%)',
   'overflow': 'hidden',
   'color': vars.color.white,
   // Primary blue orb
@@ -30,7 +31,8 @@ export const heroWrapper = style({
     transform: 'translateX(-50%)',
     width: '600px',
     height: '400px',
-    background: 'radial-gradient(ellipse, rgba(37, 99, 235, 0.4) 0%, rgba(37, 99, 235, 0.1) 40%, transparent 70%)',
+    background:
+      'radial-gradient(ellipse, rgba(37, 99, 235, 0.4) 0%, rgba(37, 99, 235, 0.1) 40%, transparent 70%)',
     pointerEvents: 'none',
     filter: 'blur(60px)',
     animation: `${floatOrb} 8s ease-in-out infinite, ${pulseGlow} 4s ease-in-out infinite`,
@@ -43,7 +45,8 @@ export const heroWrapper = style({
     left: '30%',
     width: '400px',
     height: '300px',
-    background: 'radial-gradient(ellipse, rgba(56, 189, 248, 0.3) 0%, rgba(56, 189, 248, 0.1) 40%, transparent 70%)',
+    background:
+      'radial-gradient(ellipse, rgba(56, 189, 248, 0.3) 0%, rgba(56, 189, 248, 0.1) 40%, transparent 70%)',
     pointerEvents: 'none',
     filter: 'blur(80px)',
     animation: `${floatOrb} 10s ease-in-out infinite reverse`,

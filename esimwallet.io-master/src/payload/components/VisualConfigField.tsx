@@ -48,8 +48,8 @@ export const VisualConfigField: React.FC = () => {
     ambientMotion: '',
   });
 
-  const updateConfig = (key: keyof VisualConfigState, value: string) => {
-    setConfig(prev => ({ ...prev, [key]: value }));
+  const updateConfig = (key: keyof VisualConfigState, value: string): void => {
+    setConfig((prev) => ({ ...prev, [key]: value }));
   };
 
   const fieldStyle = {
@@ -91,16 +91,18 @@ export const VisualConfigField: React.FC = () => {
   };
 
   return (
-    <div style={{
-      backgroundColor: 'rgba(255, 255, 255, 0.04)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '12px',
-      padding: '16px',
-      marginTop: '8px',
-      backdropFilter: 'blur(16px)',
-      fontFamily: 'Geist, Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-    }}>
-      <div 
+    <div
+      style={{
+        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        borderRadius: '12px',
+        padding: '16px',
+        marginTop: '8px',
+        backdropFilter: 'blur(16px)',
+        fontFamily: 'Geist, Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+      }}
+    >
+      <div
         onClick={() => setIsExpanded(!isExpanded)}
         style={{
           display: 'flex',
@@ -110,16 +112,18 @@ export const VisualConfigField: React.FC = () => {
           marginBottom: isExpanded ? '16px' : 0,
         }}
       >
-        <h3 style={{ 
-          color: '#3b82f6', 
-          margin: 0,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          fontSize: '14px',
-          fontWeight: 600,
-          fontFamily: 'Inter, sans-serif',
-        }}>
+        <h3
+          style={{
+            color: '#3b82f6',
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '14px',
+            fontWeight: 600,
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
           <span style={{ fontSize: '18px' }}>&#10024;</span>
           Visual Config
         </h3>
@@ -146,13 +150,15 @@ export const VisualConfigField: React.FC = () => {
           <div style={rowStyle}>
             <div style={colStyle}>
               <label style={labelStyle}>Visual Priority</label>
-              <select 
+              <select
                 style={fieldStyle}
                 value={config.visualPriority}
                 onChange={(e) => updateConfig('visualPriority', e.target.value)}
               >
-                {VISUAL_PRIORITIES.map(opt => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                {VISUAL_PRIORITIES.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
                 ))}
               </select>
             </div>
@@ -204,20 +210,24 @@ export const VisualConfigField: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ 
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)', 
-            paddingTop: '16px',
-            marginTop: '8px',
-          }}>
-            <p style={{ 
-              color: '#94a3b8', 
-              fontSize: '12px', 
-              marginBottom: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              fontFamily: 'Inter, sans-serif',
-            }}>
+          <div
+            style={{
+              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+              paddingTop: '16px',
+              marginTop: '8px',
+            }}
+          >
+            <p
+              style={{
+                color: '#94a3b8',
+                fontSize: '12px',
+                marginBottom: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
               <span style={{ color: '#3b82f6' }}>&#9632;</span> Motion Designer
             </p>
 
@@ -229,8 +239,10 @@ export const VisualConfigField: React.FC = () => {
                   value={config.motionPreset}
                   onChange={(e) => updateConfig('motionPreset', e.target.value)}
                 >
-                  {MOTION_PRESETS.map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  {MOTION_PRESETS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
                   ))}
                 </select>
                 <span style={hintStyle}>Primary animation style for page elements</span>
@@ -273,26 +285,32 @@ export const VisualConfigField: React.FC = () => {
               </div>
             </div>
 
-            <div style={{ 
-              borderTop: '1px solid rgba(255, 255, 255, 0.1)', 
-              paddingTop: '16px',
-              marginTop: '8px',
-            }}>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '12px',
-              }}>
-                <p style={{ 
-                  color: '#94a3b8', 
-                  fontSize: '12px', 
-                  margin: 0,
+            <div
+              style={{
+                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                paddingTop: '16px',
+                marginTop: '8px',
+              }}
+            >
+              <div
+                style={{
                   display: 'flex',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  gap: '4px',
-                  fontFamily: 'Inter, sans-serif',
-                }}>
+                  marginBottom: '12px',
+                }}
+              >
+                <p
+                  style={{
+                    color: '#94a3b8',
+                    fontSize: '12px',
+                    margin: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
                   <span style={{ color: '#60a5fa' }}>&#128279;</span> ELEMENT MOTION LINKS
                 </p>
                 <button
@@ -318,10 +336,10 @@ export const VisualConfigField: React.FC = () => {
 
               <div style={{ display: 'flex', gap: '8px' }}>
                 {['Hero Section', 'Content Sections', 'Cards/Boxes'].map((label, idx) => (
-                  <div 
+                  <div
                     key={idx}
-                    style={{ 
-                      flex: 1, 
+                    style={{
+                      flex: 1,
                       padding: '8px 12px',
                       backgroundColor: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -341,7 +359,15 @@ export const VisualConfigField: React.FC = () => {
                       e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
                     }}
                   >
-                    <span style={{ color: '#ffffff', fontSize: '13px', fontFamily: 'Inter, sans-serif' }}>{label}</span>
+                    <span
+                      style={{
+                        color: '#ffffff',
+                        fontSize: '13px',
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {label}
+                    </span>
                     <span style={{ color: '#64748b' }}>&#128279;</span>
                   </div>
                 ))}

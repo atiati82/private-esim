@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "^20.12.2",
-    "npm": "^10.0.0",
-    "pnpm": "^9.0.0"
+    "node": ">=20.12.2",
+    "npm": ">=10.0.0",
+    "pnpm": ">=9.0.0"
   },
   "packageManager": "pnpm@9.1.4",
   "scripts": {
@@ -19,7 +19,7 @@
     "build:analyze": "cross-env ANALYZE=true pnpm build",
     "start": "next start",
     "start:watch": "nodemon --config scripts/nodemon-app.json",
-    "next:dev": "next dev",
+    "next:dev": "next dev -p 3001 -H 0.0.0.0",
     "lint": "next lint --fix",
     "lint:check": "next lint",
     "format:check": "prettier --check .",
@@ -42,7 +42,8 @@
     "storybook:build": "storybook build --stats-json --output-dir=.dist/storybook",
     "storybook:start": "http-server .dist/storybook",
     "stripe:listen": "stripe listen --forward-to http://localhost:3000/api/transactions/stripe-events",
-    "trigger-deployment-commit": "tsx scripts/trigger-deployment.ts"
+    "trigger-deployment-commit": "tsx scripts/trigger-deployment.ts",
+    "guard:ai": "node scripts/ai-integration-guard.mjs"
   },
   "dependencies": {
     "@dessert-box/react": "^0.7.5",
@@ -93,6 +94,7 @@
     "country-flag-icons": "^1.5.11",
     "country-json": "^2.0.0",
     "embla-carousel-react": "^8.3.0",
+    "framer-motion": "^12.23.26",
     "joi": "^17.13.1",
     "joi-password-complexity": "^5.2.0",
     "lodash": "^4.17.21",
@@ -102,6 +104,7 @@
     "next-intl": "^3.12.1",
     "next-recaptcha-v3": "^1.4.1",
     "node-html-parser": "^6.1.13",
+    "openai": "^6.10.0",
     "payload": "^3.0.0",
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",

@@ -116,7 +116,7 @@ export const uploadImage = async (imagePathNameOrUrl: string): Promise<void> => 
       mimetype = getMimeType(fileName);
     }
 
-    const uploadImage = await payload.create({
+    const createdMedia = await payload.create({
       collection: MediaCollectionId,
       data: { filename: fileName },
       file: {
@@ -127,8 +127,8 @@ export const uploadImage = async (imagePathNameOrUrl: string): Promise<void> => 
       },
     });
 
-    logger.info('Image uploaded successfully:', uploadImage.id);
+    logger.info({ id: createdMedia.id }, 'Image uploaded successfully');
   } catch (error) {
-    logger.error('Error uploading image:', error);
+    logger.error({ err: error }, 'Error uploading image');
   }
 };

@@ -16,7 +16,7 @@ const compactLinks = [
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  
+
   return (
     <footer className={styles.footerWrapper}>
       <div className={styles.footerContainer}>
@@ -26,9 +26,7 @@ export const Footer: React.FC = () => {
               <Link href={link.url} className={styles.footerLink}>
                 {link.name}
               </Link>
-              {index < compactLinks.length - 1 && (
-                <span className={styles.footerDivider}>·</span>
-              )}
+              {index < compactLinks.length - 1 && <span className={styles.footerDivider}>·</span>}
             </React.Fragment>
           ))}
         </div>
@@ -46,10 +44,8 @@ export const Footer: React.FC = () => {
               </Link>
             ))}
           </div>
-          
-          <span className={styles.footerCopyright}>
-            © {currentYear} Private eSIM
-          </span>
+
+          <span className={styles.footerCopyright}>© {currentYear} Private eSIM</span>
         </div>
       </div>
     </footer>

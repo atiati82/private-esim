@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css';
 
 import { cssVal } from '@/styles/css-values';
 import { flexContainerC } from '@/styles/layout.css';
-import { vars } from '@/styles/theme.css';
 
 export const whyEsimWalletWrapper = style([
   flexContainerC,

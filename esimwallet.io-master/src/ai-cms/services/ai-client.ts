@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
@@ -24,14 +24,14 @@ export async function chat(
     model?: AIModel;
     temperature?: number;
     maxTokens?: number;
-  }
+  },
 ): Promise<string> {
   const model = options?.model || DEFAULT_MODEL;
-  
+
   try {
     const response = await openai.chat.completions.create({
       model,
-      messages: messages.map(m => ({
+      messages: messages.map((m) => ({
         role: m.role,
         content: m.content,
       })),
@@ -53,13 +53,13 @@ export async function chatWithFunctions<T>(
   options?: {
     model?: AIModel;
     maxIterations?: number;
-  }
+  },
 ): Promise<{ response: string; functionResults: Array<{ name: string; result: T }> }> {
   const model = options?.model || DEFAULT_MODEL;
   const maxIterations = options?.maxIterations || 5;
   const functionResults: Array<{ name: string; result: T }> = [];
-  
-  const conversationMessages: OpenAI.Chat.ChatCompletionMessageParam[] = messages.map(m => ({
+
+  const conversationMessages: OpenAI.Chat.ChatCompletionMessageParam[] = messages.map((m) => ({
     role: m.role,
     content: m.content,
   }));
@@ -78,7 +78,9 @@ export async function chatWithFunctions<T>(
     });
 
     const message = response.choices[0]?.message;
-    if (!message) break;
+    if (!message) {
+      break;
+    }
 
     if (message.tool_calls && message.tool_calls.length > 0) {
       conversationMessages.push({
@@ -88,10 +90,12 @@ export async function chatWithFunctions<T>(
       });
 
       for (const toolCall of message.tool_calls) {
-        if (toolCall.type !== 'function') continue;
+        if (toolCall.type !== 'function') {
+          continue;
+        }
         const fnName = toolCall.function.name;
         const fnArgs = JSON.parse(toolCall.function.arguments || '{}');
-        
+
         const result = await executeFunction(fnName, fnArgs);
         functionResults.push({ name: fnName, result });
 

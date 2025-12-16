@@ -38,7 +38,9 @@ export const ProductFeatureLine: React.FC<ProductFeatureLineProps> = ({
         {children}
 
         {descriptionHtml && <Textual renderAsHtmlContent={true}>{descriptionHtml}</Textual>}
-        {description?.map((descr, key) => <Textual key={key}>{descr}</Textual>)}
+        {description?.map((descr, key) => (
+          <Textual key={key}>{descr}</Textual>
+        ))}
       </div>
     </div>
   );

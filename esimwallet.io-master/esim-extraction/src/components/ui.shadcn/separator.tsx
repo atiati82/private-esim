@@ -1,0 +1,26 @@
+'use client';
+
+import * as React from 'react';
+import * as SeparatorPrimitive from '@radix-ui/react-separator';
+
+import { cn } from '@/lib/utils';
+
+import { SeparatorVariants, separatorVariants } from './separator.css';
+
+const Separator = React.forwardRef<
+  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> & SeparatorVariants
+>(({ className, orientation = 'horizontal', space, decorative = true, ...props }, ref) => {
+  return (
+    <SeparatorPrimitive.Root
+      ref={ref}
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(separatorVariants({ orientation, space }), className)}
+      {...props}
+    />
+  );
+});
+Separator.displayName = SeparatorPrimitive.Root.displayName;
+
+export { Separator };

@@ -222,6 +222,6 @@ export const MOTION_ARCHETYPES = {
 
 export type MotionArchetype = keyof typeof MOTION_ARCHETYPES;
 
-export function getMotionArchetype(name: MotionArchetype) {
+export function getMotionArchetype(name: MotionArchetype): (typeof MOTION_ARCHETYPES)[MotionArchetype] {
   return MOTION_ARCHETYPES[name];
 }

@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css';
 
 import { avatarSizeVar } from '@/components/ui.shadcn/avatar.css';
 import { cssVal } from '@/styles/css-values';
-import { vars } from '@/styles/theme.css';
 import { lineClamp1 } from '@/styles/typography.css';
 import { forCompLayer } from '@/styles/utils';
 

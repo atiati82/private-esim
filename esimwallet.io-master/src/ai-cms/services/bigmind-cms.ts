@@ -1,7 +1,8 @@
 import type OpenAI from 'openai';
-import { chat, chatWithFunctions, type ChatMessage } from './ai-client';
+
 import { parseBigMindResponse, type ParsedBigMindResponse } from '../lib/bigmind-parser';
 import { MOTION_ARCHETYPES, type MotionArchetype } from '../lib/motion';
+import { chat, chatWithFunctions, type ChatMessage } from './ai-client';
 
 const CLUSTER_ONTOLOGY = [
   { key: 'blog', name: 'Blog', description: 'News, guides, and articles' },
@@ -90,10 +91,12 @@ Section 2 Image: [detailed prompt]
 \`\`\`
 
 ## Content Clusters
-${CLUSTER_ONTOLOGY.map(c => `- ${c.key}: ${c.name} - ${c.description}`).join('\n')}
+${CLUSTER_ONTOLOGY.map((c) => `- ${c.key}: ${c.name} - ${c.description}`).join('\n')}
 
 ## Motion Archetypes
-${Object.entries(MOTION_ARCHETYPES).map(([key, val]) => `- ${key}: ${val.description}`).join('\n')}
+${Object.entries(MOTION_ARCHETYPES)
+  .map(([key, val]) => `- ${key}: ${val.description}`)
+  .join('\n')}
 
 ## Guidelines
 - Focus on eSIM, travel connectivity, and mobile data themes
@@ -149,7 +152,10 @@ const CMS_TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
         type: 'object',
         properties: {
           id: { type: 'string', description: 'Page ID' },
-          cluster: { type: 'string', description: 'Content cluster (destinations, products, blog, etc.)' },
+          cluster: {
+            type: 'string',
+            description: 'Content cluster (destinations, products, blog, etc.)',
+          },
           title: { type: 'string' },
           summary: { type: 'string', description: 'Page summary or excerpt' },
           html: { type: 'string', description: 'AI-generated HTML content' },
@@ -170,7 +176,10 @@ const CMS_TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
         type: 'object',
         properties: {
           id: { type: 'string', description: 'Page ID to delete' },
-          cluster: { type: 'string', description: 'Content cluster (destinations, products, blog, etc.)' },
+          cluster: {
+            type: 'string',
+            description: 'Content cluster (destinations, products, blog, etc.)',
+          },
         },
         required: ['id'],
       },
@@ -185,7 +194,10 @@ const CMS_TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
         type: 'object',
         properties: {
           id: { type: 'string', description: 'Page ID' },
-          cluster: { type: 'string', description: 'Content cluster (destinations, products, blog, etc.)' },
+          cluster: {
+            type: 'string',
+            description: 'Content cluster (destinations, products, blog, etc.)',
+          },
         },
         required: ['id'],
       },
@@ -217,7 +229,11 @@ const CMS_TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
         properties: {
           pageId: { type: 'string', description: 'Page ID' },
           preset: { type: 'string', description: 'Motion preset name' },
-          elements: { type: 'array', items: { type: 'string' }, description: 'Elements to apply to' },
+          elements: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Elements to apply to',
+          },
         },
         required: ['pageId', 'preset'],
       },
@@ -243,7 +259,11 @@ const CMS_TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
 ];
 
 export interface CMSStorage {
-  listPages: (options?: { cluster?: string; status?: string; limit?: number }) => Promise<unknown[]>;
+  listPages: (options?: {
+    cluster?: string;
+    status?: string;
+    limit?: number;
+  }) => Promise<unknown[]>;
   createPage: (data: Record<string, unknown>) => Promise<unknown>;
   updatePage: (id: string, data: Record<string, unknown>) => Promise<unknown>;
   deletePage: (id: string, options?: { cluster?: string }) => Promise<boolean>;
@@ -253,42 +273,42 @@ export interface CMSStorage {
 export async function executeCmsFunction(
   name: string,
   args: Record<string, unknown>,
-  storage: CMSStorage
+  storage: CMSStorage,
 ): Promise<unknown> {
   console.log(`[BigMind CMS] Executing: ${name}`, JSON.stringify(args));
 
   switch (name) {
     case 'listPages':
       return storage.listPages(args as { cluster?: string; status?: string; limit?: number });
-    
+
     case 'createPage':
       return storage.createPage(args);
-    
+
     case 'updatePage': {
       const { id, ...updates } = args;
       return storage.updatePage(id as string, updates);
     }
-    
+
     case 'deletePage': {
       const { id, cluster } = args as { id: string; cluster?: string };
       return storage.deletePage(id, { cluster });
     }
-    
+
     case 'getPage': {
       const { id, cluster } = args as { id: string; cluster?: string };
       return storage.getPage(id, { cluster });
     }
-    
+
     case 'listClusters':
       return CLUSTER_ONTOLOGY;
-    
+
     case 'listMotionArchetypes':
       return Object.entries(MOTION_ARCHETYPES).map(([key, val]) => ({
         key,
         name: val.name,
         description: val.description,
       }));
-    
+
     case 'applyMotionPreset': {
       const { pageId, preset } = args as { pageId: string; preset: MotionArchetype };
       const archetype = MOTION_ARCHETYPES[preset];
@@ -302,7 +322,7 @@ export async function executeCmsFunction(
         },
       });
     }
-    
+
     case 'generatePageContent': {
       const { topic, cluster, outline, language } = args as {
         topic: string;
@@ -310,21 +330,21 @@ export async function executeCmsFunction(
         outline?: string;
         language?: string;
       };
-      
+
       const prompt = `Generate a complete page for "${topic}" in the ${cluster} cluster.
 ${outline ? `Key points to cover: ${outline}` : ''}
 ${language ? `Write content in ${language} language.` : ''}
 
 Output all four blocks: page-metadata, visual-config, html, and image-prompts.`;
-      
+
       const response = await chat([
         { role: 'system', content: BIGMIND_SYSTEM_PROMPT },
         { role: 'user', content: prompt },
       ]);
-      
+
       return parseBigMindResponse(response);
     }
-    
+
     default:
       return { error: `Unknown function: ${name}` };
   }
@@ -336,7 +356,7 @@ export async function bigmindChat(
   options?: {
     includeContext?: boolean;
     enableFunctions?: boolean;
-  }
+  },
 ): Promise<{
   response: string;
   parsed?: ParsedBigMindResponse;
@@ -351,11 +371,11 @@ export async function bigmindChat(
     const { response, functionResults } = await chatWithFunctions(
       allMessages,
       CMS_TOOLS,
-      (name, args) => executeCmsFunction(name, args, storage)
+      (name, args) => executeCmsFunction(name, args, storage),
     );
 
     const parsed = parseBigMindResponse(response);
-    
+
     return {
       response,
       parsed: parsed.htmlContent || parsed.pageMetadata.title ? parsed : undefined,
@@ -365,7 +385,7 @@ export async function bigmindChat(
 
   const response = await chat(allMessages);
   const parsed = parseBigMindResponse(response);
-  
+
   return {
     response,
     parsed: parsed.htmlContent || parsed.pageMetadata.title ? parsed : undefined,

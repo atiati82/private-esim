@@ -3,7 +3,6 @@ import { createVar, style } from '@vanilla-extract/css';
 import { transitionBgColors } from '@/styles/animations/animations.css';
 import { cssVal } from '@/styles/css-values';
 import { flexContainerJbC, pageContainer } from '@/styles/layout.css';
-import { vars } from '@/styles/theme.css';
 import { rem } from '@/styles/utils';
 
 const breakpoint = 550;

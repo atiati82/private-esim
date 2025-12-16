@@ -1,6 +1,7 @@
 import type { Payload, Where } from 'payload';
+
+import { generateSlugFromTitle, parseBigMindResponse } from '../lib/bigmind-parser';
 import type { CMSStorage } from './bigmind-cms';
-import { parseBigMindResponse, generateSlugFromTitle } from '../lib/bigmind-parser';
 
 type SupportedLocale = 'en' | 'de' | 'es' | 'fr' | 'pl' | 'ru';
 
@@ -8,14 +9,14 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
   return {
     async listPages(options) {
       const where: Where = {};
-      
+
       if (options?.status) {
         where.status = { equals: options.status };
       }
       if (options?.cluster) {
         where.contentCluster = { equals: options.cluster };
       }
-      
+
       const result = await payload.find({
         collection: 'ai-pages',
         where,
@@ -24,7 +25,7 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
         locale: locale,
       });
 
-      return result.docs.map(doc => {
+      return result.docs.map((doc) => {
         const page = doc as {
           id: string;
           title: string;
@@ -35,7 +36,7 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
           createdAt: string;
           updatedAt: string;
         };
-        
+
         return {
           id: page.id,
           title: page.title,
@@ -52,7 +53,7 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
       const title = data.title as string;
       const key = (data.key as string) || generateSlugFromTitle(title);
       const urlPath = (data.path as string) || `/${locale}/${data.cluster || 'blog'}/${key}`;
-      
+
       const pageData = {
         title,
         key,
@@ -84,7 +85,7 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
         cardsBoxesMotion: data.cardsBoxesMotion || '',
         pageIcon: data.pageIcon || '',
       };
-      
+
       const result = await payload.create({
         collection: 'ai-pages',
         data: pageData as never,
@@ -95,34 +96,76 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
         id: result.id as string,
         path: urlPath,
         title,
-        cluster: data.cluster as string || 'blog',
+        cluster: (data.cluster as string) || 'blog',
       };
     },
 
     async updatePage(id, data) {
       const updateData: Record<string, unknown> = {};
-      
-      if (data.title) updateData.title = data.title;
-      if (data.path) updateData.urlPath = data.path;
-      if (data.html) updateData.rawHtmlContent = data.html;
-      if (data.summary) updateData.summary = data.summary;
-      if (data.seoTitle) updateData.seoTitle = data.seoTitle;
-      if (data.seoDescription) updateData.seoDescription = data.seoDescription;
-      if (data.seoFocusKeyword) updateData.seoFocusKeyword = data.seoFocusKeyword;
-      if (data.featuredImageUrl) updateData.featuredImageUrl = data.featuredImageUrl;
-      if (data.aiImagePrompt) updateData.aiImagePrompt = data.aiImagePrompt;
-      if (data.aiVideoPrompt) updateData.aiVideoPrompt = data.aiVideoPrompt;
-      if (data.designerNotes) updateData.designerNotes = data.designerNotes;
-      if (data.vibeKeywords) updateData.vibeKeywords = data.vibeKeywords;
-      if (data.emotionalTone) updateData.emotionalTone = data.emotionalTone;
-      if (data.animationIdeas) updateData.animationIdeas = data.animationIdeas;
-      if (data.motionPreset) updateData.motionPreset = data.motionPreset;
-      if (data.entranceMotion) updateData.entranceMotion = data.entranceMotion;
-      if (data.hoverMotion) updateData.hoverMotion = data.hoverMotion;
-      if (data.ambientMotion) updateData.ambientMotion = data.ambientMotion;
-      if (data.pageIcon) updateData.pageIcon = data.pageIcon;
-      if (data.cluster) updateData.contentCluster = data.cluster;
-      if (data.status) updateData.status = data.status;
+
+      if (data.title) {
+        updateData.title = data.title;
+      }
+      if (data.path) {
+        updateData.urlPath = data.path;
+      }
+      if (data.html) {
+        updateData.rawHtmlContent = data.html;
+      }
+      if (data.summary) {
+        updateData.summary = data.summary;
+      }
+      if (data.seoTitle) {
+        updateData.seoTitle = data.seoTitle;
+      }
+      if (data.seoDescription) {
+        updateData.seoDescription = data.seoDescription;
+      }
+      if (data.seoFocusKeyword) {
+        updateData.seoFocusKeyword = data.seoFocusKeyword;
+      }
+      if (data.featuredImageUrl) {
+        updateData.featuredImageUrl = data.featuredImageUrl;
+      }
+      if (data.aiImagePrompt) {
+        updateData.aiImagePrompt = data.aiImagePrompt;
+      }
+      if (data.aiVideoPrompt) {
+        updateData.aiVideoPrompt = data.aiVideoPrompt;
+      }
+      if (data.designerNotes) {
+        updateData.designerNotes = data.designerNotes;
+      }
+      if (data.vibeKeywords) {
+        updateData.vibeKeywords = data.vibeKeywords;
+      }
+      if (data.emotionalTone) {
+        updateData.emotionalTone = data.emotionalTone;
+      }
+      if (data.animationIdeas) {
+        updateData.animationIdeas = data.animationIdeas;
+      }
+      if (data.motionPreset) {
+        updateData.motionPreset = data.motionPreset;
+      }
+      if (data.entranceMotion) {
+        updateData.entranceMotion = data.entranceMotion;
+      }
+      if (data.hoverMotion) {
+        updateData.hoverMotion = data.hoverMotion;
+      }
+      if (data.ambientMotion) {
+        updateData.ambientMotion = data.ambientMotion;
+      }
+      if (data.pageIcon) {
+        updateData.pageIcon = data.pageIcon;
+      }
+      if (data.cluster) {
+        updateData.contentCluster = data.cluster;
+      }
+      if (data.status) {
+        updateData.status = data.status;
+      }
 
       const result = await payload.update({
         collection: 'ai-pages',
@@ -131,7 +174,12 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
         data: updateData as never,
       });
 
-      const pageResult = result as unknown as { id: string; title?: string; status?: string; contentCluster?: string };
+      const pageResult = result as unknown as {
+        id: string;
+        title?: string;
+        status?: string;
+        contentCluster?: string;
+      };
 
       return {
         id: pageResult.id,
@@ -160,7 +208,7 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
           id,
           locale: locale,
         });
-        
+
         const page = doc as {
           id: string;
           title: string;
@@ -181,7 +229,7 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
           aiImagePrompt?: string;
           aiVideoPrompt?: string;
         };
-        
+
         return {
           id: page.id,
           title: page.title,
@@ -205,7 +253,8 @@ export function createAiPagesStorage(payload: Payload, locale: SupportedLocale =
   };
 }
 
-export function parsedResponseToPageData(parsed: ReturnType<typeof parseBigMindResponse>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parsedResponseToPageData(parsed: ReturnType<typeof parseBigMindResponse>): Record<string, any> {
   return {
     title: parsed.pageMetadata.title,
     key: parsed.pageMetadata.key,
@@ -221,7 +270,8 @@ export function parsedResponseToPageData(parsed: ReturnType<typeof parseBigMindR
     featuredImageUrl: parsed.pageMetadata.featuredImageUrl,
     pageIcon: parsed.pageMetadata.pageIcon,
     html: parsed.htmlContent,
-    aiImagePrompt: parsed.aiImagePrompt || (parsed.imagePrompts.length > 0 ? parsed.imagePrompts[0].prompt : ''),
+    aiImagePrompt:
+      parsed.aiImagePrompt || (parsed.imagePrompts.length > 0 ? parsed.imagePrompts[0].prompt : ''),
     aiVideoPrompt: parsed.aiVideoPrompt,
     designerNotes: parsed.designerNotes,
     visualPriority: parsed.visualConfig.visualPriority,

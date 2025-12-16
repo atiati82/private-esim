@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useField } from '@payloadcms/ui';
 
 interface SuggestedPrompt {
@@ -9,11 +9,28 @@ interface SuggestedPrompt {
 }
 
 const SUGGESTED_PROMPTS: SuggestedPrompt[] = [
-  { label: 'Generate SEO', prompt: 'Generate optimized SEO title and description for this page focusing on eSIM and travel connectivity keywords.' },
-  { label: 'Write Hero', prompt: 'Write a compelling hero section with headline, subheadline, and call-to-action for eSIM services.' },
-  { label: 'Create Benefits', prompt: 'Create a benefits section highlighting 4-6 key advantages of using our eSIM service.' },
-  { label: 'Write FAQ', prompt: 'Write 5-7 frequently asked questions and answers about eSIM technology and usage.' },
-  { label: 'Image Prompts', prompt: 'Generate detailed image prompts for hero, section illustrations, and feature icons.' },
+  {
+    label: 'Generate SEO',
+    prompt:
+      'Generate optimized SEO title and description for this page focusing on eSIM and travel connectivity keywords.',
+  },
+  {
+    label: 'Write Hero',
+    prompt:
+      'Write a compelling hero section with headline, subheadline, and call-to-action for eSIM services.',
+  },
+  {
+    label: 'Create Benefits',
+    prompt: 'Create a benefits section highlighting 4-6 key advantages of using our eSIM service.',
+  },
+  {
+    label: 'Write FAQ',
+    prompt: 'Write 5-7 frequently asked questions and answers about eSIM technology and usage.',
+  },
+  {
+    label: 'Image Prompts',
+    prompt: 'Generate detailed image prompts for hero, section illustrations, and feature icons.',
+  },
 ];
 
 interface AIEnhancementTask {
@@ -36,35 +53,39 @@ export const AIPageBuilder: React.FC<{
   const { value, setValue } = useField<string>({ path });
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
+  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>(
+    [],
+  );
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = useCallback(async () => {
-    if (!input.trim()) return;
-    
+    if (!input.trim()) {
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
-    
+
     const userMessage = input;
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-    
+    setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
+
     try {
       const response = await fetch('/esim-api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to get AI response');
       }
-      
+
       const data = await response.json();
       const assistantMessage = data.response || data.message || 'No response received';
-      
-      setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
-      
+
+      setMessages((prev) => [...prev, { role: 'assistant', content: assistantMessage }]);
+
       if (data.parsed?.htmlContent) {
         setValue(data.parsed.htmlContent);
       }
@@ -86,31 +107,37 @@ export const AIPageBuilder: React.FC<{
   }, []);
 
   return (
-    <div style={{
-      backgroundColor: 'rgba(255, 255, 255, 0.04)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '12px',
-      padding: '16px',
-      marginTop: '16px',
-      backdropFilter: 'blur(16px)',
-      fontFamily: 'Geist, Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-    }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '16px',
-      }}>
-        <h3 style={{ 
-          color: '#3b82f6', 
-          margin: 0,
+    <div
+      style={{
+        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        borderRadius: '12px',
+        padding: '16px',
+        marginTop: '16px',
+        backdropFilter: 'blur(16px)',
+        fontFamily: 'Geist, Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+      }}
+    >
+      <div
+        style={{
           display: 'flex',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '8px',
-          fontSize: '14px',
-          fontWeight: 600,
-          fontFamily: 'Inter, sans-serif',
-        }}>
+          marginBottom: '16px',
+        }}
+      >
+        <h3
+          style={{
+            color: '#3b82f6',
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '14px',
+            fontWeight: 600,
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
           <span style={{ fontSize: '18px' }}>&#10024;</span>
           AI Page Builder
         </h3>
@@ -136,15 +163,17 @@ export const AIPageBuilder: React.FC<{
       </div>
 
       {messages.length > 0 && (
-        <div style={{
-          maxHeight: '200px',
-          overflowY: 'auto',
-          marginBottom: '16px',
-          padding: '12px',
-          backgroundColor: 'rgba(10, 10, 10, 0.6)',
-          borderRadius: '8px',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-        }}>
+        <div
+          style={{
+            maxHeight: '200px',
+            overflowY: 'auto',
+            marginBottom: '16px',
+            padding: '12px',
+            backgroundColor: 'rgba(10, 10, 10, 0.6)',
+            borderRadius: '8px',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+          }}
+        >
           {messages.map((msg, idx) => (
             <div
               key={idx}
@@ -152,7 +181,8 @@ export const AIPageBuilder: React.FC<{
                 marginBottom: '8px',
                 padding: '8px 12px',
                 borderRadius: '8px',
-                backgroundColor: msg.role === 'user' ? 'rgba(37, 99, 235, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                backgroundColor:
+                  msg.role === 'user' ? 'rgba(37, 99, 235, 0.15)' : 'rgba(255, 255, 255, 0.05)',
                 color: '#ffffff',
                 fontSize: '13px',
                 fontFamily: 'Inter, sans-serif',
@@ -169,15 +199,17 @@ export const AIPageBuilder: React.FC<{
         </div>
       )}
 
-      <div style={{
-        display: 'flex',
-        gap: '8px',
-        marginBottom: '16px',
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '8px',
+          marginBottom: '16px',
+        }}
+      >
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste your ANDARA VISUAL CONFIG + HTML here, or ask AI to help build this page..."
+          placeholder="Paste your VISUAL CONFIG + HTML here, or ask AI to help build this page..."
           style={{
             flex: 1,
             minHeight: '100px',
@@ -228,28 +260,32 @@ export const AIPageBuilder: React.FC<{
       </div>
 
       {error && (
-        <div style={{
-          backgroundColor: 'rgba(239, 68, 68, 0.15)',
-          border: '1px solid rgba(239, 68, 68, 0.3)',
-          color: '#f87171',
-          padding: '8px 12px',
-          borderRadius: '8px',
-          marginBottom: '16px',
-          fontSize: '13px',
-          fontFamily: 'Inter, sans-serif',
-        }}>
+        <div
+          style={{
+            backgroundColor: 'rgba(239, 68, 68, 0.15)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            color: '#f87171',
+            padding: '8px 12px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+            fontSize: '13px',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
           {error}
         </div>
       )}
 
       <div style={{ marginBottom: '16px' }}>
-        <p style={{ 
-          color: '#94a3b8', 
-          fontSize: '12px', 
-          marginBottom: '8px',
-          margin: '0 0 8px 0',
-          fontFamily: 'Inter, sans-serif',
-        }}>
+        <p
+          style={{
+            color: '#94a3b8',
+            fontSize: '12px',
+            marginBottom: '8px',
+            margin: '0 0 8px 0',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
           Suggested Prompts
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -286,16 +322,18 @@ export const AIPageBuilder: React.FC<{
       </div>
 
       <div>
-        <p style={{ 
-          color: '#94a3b8', 
-          fontSize: '12px', 
-          marginBottom: '8px',
-          margin: '0 0 8px 0',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          fontFamily: 'Inter, sans-serif',
-        }}>
+        <p
+          style={{
+            color: '#94a3b8',
+            fontSize: '12px',
+            marginBottom: '8px',
+            margin: '0 0 8px 0',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
           <span style={{ fontSize: '14px' }}>&#10024;</span>
           AI Enhancement Tasks
         </p>
@@ -308,28 +346,29 @@ export const AIPageBuilder: React.FC<{
                 alignItems: 'center',
                 gap: '8px',
                 padding: '8px 12px',
-                backgroundColor: task.required ? 'rgba(245, 158, 11, 0.1)' : 'rgba(37, 99, 235, 0.1)',
+                backgroundColor: task.required
+                  ? 'rgba(245, 158, 11, 0.1)'
+                  : 'rgba(37, 99, 235, 0.1)',
                 borderRadius: '8px',
                 borderLeft: task.required ? '3px solid #f59e0b' : '3px solid #3b82f6',
               }}
             >
-              <input
-                type="checkbox"
-                style={{ accentColor: '#2563eb' }}
-              />
+              <input type="checkbox" style={{ accentColor: '#2563eb' }} />
               <span style={{ color: '#ffffff', fontSize: '13px', fontFamily: 'Inter, sans-serif' }}>
                 {task.label}
               </span>
               {task.required && (
-                <span style={{
-                  backgroundColor: 'rgba(245, 158, 11, 0.2)',
-                  color: '#fbbf24',
-                  padding: '2px 6px',
-                  borderRadius: '9999px',
-                  fontSize: '10px',
-                  fontWeight: 500,
-                  fontFamily: 'Inter, sans-serif',
-                }}>
+                <span
+                  style={{
+                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                    color: '#fbbf24',
+                    padding: '2px 6px',
+                    borderRadius: '9999px',
+                    fontSize: '10px',
+                    fontWeight: 500,
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
                   Missing
                 </span>
               )}
@@ -340,7 +379,14 @@ export const AIPageBuilder: React.FC<{
 
       {value && (
         <div style={{ marginTop: '16px' }}>
-          <p style={{ color: '#94a3b8', fontSize: '12px', marginBottom: '8px', fontFamily: 'Inter, sans-serif' }}>
+          <p
+            style={{
+              color: '#94a3b8',
+              fontSize: '12px',
+              marginBottom: '8px',
+              fontFamily: 'Inter, sans-serif',
+            }}
+          >
             Generated HTML Preview
           </p>
           <div
@@ -353,14 +399,18 @@ export const AIPageBuilder: React.FC<{
               overflowY: 'auto',
             }}
           >
-            <pre style={{ 
-              color: '#ffffff', 
-              fontSize: '12px', 
-              margin: 0,
-              whiteSpace: 'pre-wrap',
-              fontFamily: 'Geist Mono, Monaco, monospace',
-            }}>
-              {typeof value === 'string' ? value.substring(0, 1000) : JSON.stringify(value, null, 2)}
+            <pre
+              style={{
+                color: '#ffffff',
+                fontSize: '12px',
+                margin: 0,
+                whiteSpace: 'pre-wrap',
+                fontFamily: 'Geist Mono, Monaco, monospace',
+              }}
+            >
+              {typeof value === 'string'
+                ? value.substring(0, 1000)
+                : JSON.stringify(value, null, 2)}
               {typeof value === 'string' && value.length > 1000 && '...'}
             </pre>
           </div>

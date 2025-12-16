@@ -6,10 +6,66 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Brisbane'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: UserDto;
     'esim-cards': EsimCardDto;
@@ -24,6 +80,7 @@ export interface Config {
     'blog-categories': BlogCategory;
     'blog-tags': BlogTag;
     'ai-pages': AiPage;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -47,6 +104,7 @@ export interface Config {
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'blog-tags': BlogTagsSelect<false> | BlogTagsSelect<true>;
     'ai-pages': AiPagesSelect<false> | AiPagesSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -54,6 +112,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale:
+    | ('false' | 'none' | 'null')
+    | false
+    | null
+    | ('de' | 'en' | 'es' | 'fr' | 'pl' | 'ru')
+    | ('de' | 'en' | 'es' | 'fr' | 'pl' | 'ru')[];
   globals: {
     'esim-products-data': EsimProductsContent;
   };
@@ -88,6 +152,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Private eSIM customers and our PayloadCMS users.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -108,6 +174,13 @@ export interface UserDto {
   _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -116,6 +189,9 @@ export interface UserDto {
  */
 export interface EsimCardDto {
   id: string;
+  /**
+   * eSIM card status, in SM-DP+ server.
+   */
   statusSmdp: 'ephemeral' | 'created' | 'activated' | 'suspended' | 'disabled' | 'error' | 'unrecognized';
   orderedPackages: {
     orderItem: string | OrderItemDto;
@@ -125,6 +201,9 @@ export interface EsimCardDto {
     createdAt?: string | null;
     id?: string | null;
   }[];
+  /**
+   * eSIM Card history log. Changes in ICCID numbers. It might contain multiple entries if/when the eSIM Card replacement has been ordered.
+   */
   esimHistory: {
     iccid: string;
     supplierOrderId: string;
@@ -134,8 +213,14 @@ export interface EsimCardDto {
     id?: string | null;
   }[];
   setup: EsimCardSetup;
+  /**
+   * Customer who owns/manages the eSIM in their wallet.
+   */
   user: string | UserDto;
   usageTracking: boolean;
+  /**
+   * Quick call *code to get the current usage.
+   */
   usageTrackingCode?: string | null;
   provider: string | EsimProviderDto;
   supplier: 'mm';
@@ -150,6 +235,9 @@ export interface EsimCardDto {
 export interface OrderItemDto {
   id: string;
   product: string | EsimProductDto;
+  /**
+   * eSIM for which this product has been bought. If empty, the order (for eSIM starter) hasn't been fulfilled yet.
+   */
   esimCard?: (string | null) | EsimCardDto;
   usage?: PackageUsageDto;
   status?: OrderItemLiveStatusDto;
@@ -170,6 +258,9 @@ export interface OrderItemDto {
   price: number;
   supplierPrice: number;
   profit?: number | null;
+  /**
+   * Customer who owns/manages the item in their wallet.
+   */
   user: string | UserDto;
   fulfillment: OrderFulfillment;
   updatedAt: string;
@@ -216,7 +307,13 @@ export interface EsimProductDto {
   productFamily: string;
   productFamilyTopUpsCount?: number | null;
   usageTracking?: boolean | null;
+  /**
+   * AI-generated HTML content for product page
+   */
   aiGeneratedHtml?: string | null;
+  /**
+   * Motion and visual settings (JSON)
+   */
   aiVisualConfig?:
     | {
         [k: string]: unknown;
@@ -226,6 +323,9 @@ export interface EsimProductDto {
     | number
     | boolean
     | null;
+  /**
+   * Image generation prompts (JSON)
+   */
   aiImagePrompts?:
     | {
         [k: string]: unknown;
@@ -259,10 +359,15 @@ export interface EsimProductPricing {
     | null;
 }
 /**
+ * Destination. Usually a country. Can be a city / state within country.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "destinations".
  */
 export interface DestinationDto {
+  /**
+   * ISO 2-letter country code or ISO-<suffix> for city destinations. All lowercase.
+   */
   id: string;
   name: string;
   published?: boolean | null;
@@ -277,10 +382,25 @@ export interface DestinationDto {
     priceFrom?: number | null;
     pricePerGbFrom?: number | null;
   };
+  /**
+   * Search keywords: alternative names, major city names, states, etc.
+   */
   keywords?: string | null;
+  /**
+   * Coma-separated alternative ISO codes, used to map destinations to destination codes used by eSIM providers.
+   */
   altIsoCodes?: string[] | null;
+  /**
+   * For destinations which aren't countries, set country information here.
+   */
   parentDestination?: (string | null) | DestinationDto;
+  /**
+   * AI-generated HTML content for destination page
+   */
   aiGeneratedHtml?: string | null;
+  /**
+   * Motion and visual settings (JSON)
+   */
   aiVisualConfig?:
     | {
         [k: string]: unknown;
@@ -290,6 +410,9 @@ export interface DestinationDto {
     | number
     | boolean
     | null;
+  /**
+   * Image generation prompts (JSON)
+   */
   aiImagePrompts?:
     | {
         [k: string]: unknown;
@@ -342,6 +465,8 @@ export interface EsimProviderDto {
   focalY?: number | null;
 }
 /**
+ * Data Plan current usage etc.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "PackageUsageDto".
  */
@@ -356,6 +481,8 @@ export interface PackageUsageDto {
   minUsageDelta?: number | null;
 }
 /**
+ * Plan / Package "live" statuses, based on latest usage data received from Provider.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "OrderItemLiveStatusDto".
  */
@@ -373,9 +500,10 @@ export interface TransactionDto {
   user: string | UserDto;
   total: number;
   orderItems?: {
-    docs?: (string | OrderItemDto)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | OrderItemDto)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   paymentStatus?:
     | (
         | 'requires_payment_method'
@@ -396,6 +524,9 @@ export interface TransactionDto {
  * via the `definition` "OrderFulfillment".
  */
 export interface OrderFulfillment {
+  /**
+   * Order State from Supplier.
+   */
   status: 'New' | 'Fulfilled' | 'Processing' | 'Cancelled' | 'Expired' | 'Error';
   supplier: 'mm';
   supplierProductId: string;
@@ -403,16 +534,30 @@ export interface OrderFulfillment {
   fulfilledAt?: string | null;
 }
 /**
+ * eSIM card technical details, related to installation and activation.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "EsimCardSetup".
  */
 export interface EsimCardSetup {
+  /**
+   * eSIM ICCID, Integrated Circuit Card Identifier, a unique number that identifies the eSIM itself (on SM-DP+ server).
+   */
   iccid: string;
   phoneNo?: string | null;
+  /**
+   * SM-DP+ server address of your carrier's Subscription Manager Data Preparation system (which prepares, stores and deliver eSIM profiles).
+   */
   smdpAddress: string;
   activationCode: string;
   confirmationCode?: string | null;
+  /**
+   * Local Profile Assistant URL. This is the only info needed to prepare/install eSIM and this is what is included in QR code.
+   */
   lpa: string;
+  /**
+   * Access Point Name i.e. Internet gateway, where the Internet traffic is routed.
+   */
   apn: string;
 }
 /**
@@ -435,6 +580,8 @@ export interface MediaDto {
   focalY?: number | null;
 }
 /**
+ * Manage blog posts, including creating, updating, and categorizing posts.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-posts".
  */
@@ -445,7 +592,7 @@ export interface BlogPost {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -457,19 +604,40 @@ export interface BlogPost {
     [k: string]: unknown;
   };
   meta?: SeoMetaData;
+  /**
+   * Required for published posts. Optional for AI-generated drafts.
+   */
   featuredImage?: (string | null) | MediaDto;
   markAsTopPost?: boolean | null;
   slug: string;
+  /**
+   * Brief summary of the post
+   */
   excerpt?: string | null;
+  /**
+   * Auto-set when post is published
+   */
   publishedDate?: string | null;
+  /**
+   * Auto-set from current user if empty
+   */
   author?: (string | null) | UserDto;
   tags?: (string | BlogTag)[] | null;
   categories?: (string | BlogCategory)[] | null;
   views?: number | null;
   shares?: number | null;
   metricsTopPostScore?: number | null;
+  /**
+   * Content cluster for AI CMS routing
+   */
   contentCluster?: ('blog' | 'support' | 'about' | 'legal') | null;
+  /**
+   * AI-generated HTML content for rendering
+   */
   aiGeneratedHtml?: string | null;
+  /**
+   * Motion and visual settings (JSON)
+   */
   aiVisualConfig?:
     | {
         [k: string]: unknown;
@@ -479,6 +647,9 @@ export interface BlogPost {
     | number
     | boolean
     | null;
+  /**
+   * Image generation prompts (JSON)
+   */
   aiImagePrompts?:
     | {
         [k: string]: unknown;
@@ -499,6 +670,9 @@ export interface BlogPost {
 export interface SeoMetaData {
   title?: string | null;
   description?: string | null;
+  /**
+   * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+   */
   image?: (string | null) | MediaDto;
 }
 /**
@@ -523,13 +697,21 @@ export interface BlogCategory {
   createdAt: string;
 }
 /**
+ * AI-powered page creation and management with BigMind
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ai-pages".
  */
 export interface AiPage {
   id: string;
   title: string;
+  /**
+   * Unique identifier for this page
+   */
   key: string;
+  /**
+   * e.g., /blog/my-article or /support/faq
+   */
   urlPath: string;
   pageType?: ('standard' | 'landing' | 'article' | 'product' | 'destination') | null;
   template?: ('default' | 'pillar-overview' | 'blog-article' | 'faq' | 'comparison' | 'hero-landing') | null;
@@ -537,12 +719,18 @@ export interface AiPage {
   parentPage?: (string | null) | AiPage;
   contentCluster?: ('blog' | 'support' | 'about' | 'legal' | 'science' | 'products' | 'destinations') | null;
   priority?: number | null;
+  /**
+   * Brief summary of the page content...
+   */
   summary?: string | null;
+  /**
+   * Main page content
+   */
   content?: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -553,18 +741,48 @@ export interface AiPage {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * AI-generated HTML content
+   */
   rawHtmlContent?: string | null;
   seoFocusKeyword?: string | null;
+  /**
+   * Leave empty to use page title
+   */
   seoTitle?: string | null;
+  /**
+   * Meta description for search engines
+   */
   seoDescription?: string | null;
+  /**
+   * https://example.com/image.jpg
+   */
   featuredImageUrl?: string | null;
+  /**
+   * Detailed prompt for generating hero images...
+   */
   aiImagePrompt?: string | null;
+  /**
+   * Detailed prompt for generating background videos...
+   */
   aiVideoPrompt?: string | null;
+  /**
+   * Additional notes for designers or developers...
+   */
   designerNotes?: string | null;
   visualPriority?: ('p1' | 'p2' | 'p3') | null;
   visualCluster?: string | null;
+  /**
+   * Comma-separated
+   */
   vibeKeywords?: string | null;
+  /**
+   * Comma-separated
+   */
   emotionalTone?: string | null;
+  /**
+   * Comma-separated
+   */
   animationIdeas?: string | null;
   motionPreset?:
     | (
@@ -581,12 +799,24 @@ export interface AiPage {
         | 'layered-parallax'
       )
     | null;
+  /**
+   * e.g., fadeUp, scaleIn, slideFromLeft
+   */
   entranceMotion?: string | null;
+  /**
+   * e.g., hover.lift, hover.glow, hover.scale
+   */
   hoverMotion?: string | null;
+  /**
+   * e.g., ambient.float, ambient.pulse
+   */
   ambientMotion?: string | null;
   heroSectionMotion?: string | null;
   contentSectionsMotion?: string | null;
   cardsBoxesMotion?: string | null;
+  /**
+   * Lucide icon name for navigation (e.g., Beaker, Flask, Droplet)
+   */
   pageIcon?: string | null;
   mediaGallery?:
     | {
@@ -596,6 +826,9 @@ export interface AiPage {
         id?: string | null;
       }[]
     | null;
+  /**
+   * AI conversation history for this page
+   */
   aiChatHistory?:
     | {
         [k: string]: unknown;
@@ -605,6 +838,9 @@ export interface AiPage {
     | number
     | boolean
     | null;
+  /**
+   * Most recent prompt sent to BigMind
+   */
   aiLastPrompt?: string | null;
   publishedAt?: string | null;
   internalLinks?: (string | AiPage)[] | null;
@@ -617,6 +853,23 @@ export interface AiPage {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: string;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -739,6 +992,13 @@ export interface UsersSelect<T extends boolean = true> {
   _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -767,26 +1027,28 @@ export interface EsimCardsSelect<T extends boolean = true> {
         installedAt?: T;
         id?: T;
       };
-  setup?:
-    | T
-    | {
-        iccid?: T;
-        phoneNo?: T;
-        smdpAddress?: T;
-        activationCode?: T;
-        confirmationCode?: T;
-        lpa?: T;
-        apn?: T;
-      };
+  setup?: T | EsimCardSetupSelect<T>;
   user?: T;
   usageTracking?: T;
   usageTrackingCode?: T;
   provider?: T;
   supplier?: T;
   usageLastSyncAt?: T;
-  syncUsageData?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EsimCardSetup_select".
+ */
+export interface EsimCardSetupSelect<T extends boolean = true> {
+  iccid?: T;
+  phoneNo?: T;
+  smdpAddress?: T;
+  activationCode?: T;
+  confirmationCode?: T;
+  lpa?: T;
+  apn?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -796,27 +1058,9 @@ export interface OrdersSelect<T extends boolean = true> {
   id?: T;
   product?: T;
   esimCard?: T;
-  usage?:
-    | T
-    | {
-        activationDate?: T;
-        expirationDate?: T;
-        mbUsed?: T;
-        mbAllowance?: T;
-        mbUsageDelta?: T;
-        minUsed?: T;
-        minAllowance?: T;
-        minUsageDelta?: T;
-      };
-  status?:
-    | T
-    | {
-        isActivelyUsingAllowance?: T;
-        isPackageExpired?: T;
-        isPackageUsedUp?: T;
-      };
+  usage?: T | PackageUsageDtoSelect<T>;
+  status?: T | OrderItemLiveStatusDtoSelect<T>;
   usageLastSyncAt?: T;
-  syncUsageDataForOrderItem?: T;
   title?: T;
   transaction?: T;
   transactionPaymentStatus?: T;
@@ -824,17 +1068,43 @@ export interface OrdersSelect<T extends boolean = true> {
   supplierPrice?: T;
   profit?: T;
   user?: T;
-  fulfillment?:
-    | T
-    | {
-        status?: T;
-        supplier?: T;
-        supplierProductId?: T;
-        supplierOrderId?: T;
-        fulfilledAt?: T;
-      };
+  fulfillment?: T | OrderFulfillmentSelect<T>;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PackageUsageDto_select".
+ */
+export interface PackageUsageDtoSelect<T extends boolean = true> {
+  activationDate?: T;
+  expirationDate?: T;
+  mbUsed?: T;
+  mbAllowance?: T;
+  mbUsageDelta?: T;
+  minUsed?: T;
+  minAllowance?: T;
+  minUsageDelta?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrderItemLiveStatusDto_select".
+ */
+export interface OrderItemLiveStatusDtoSelect<T extends boolean = true> {
+  isActivelyUsingAllowance?: T;
+  isPackageExpired?: T;
+  isPackageUsedUp?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrderFulfillment_select".
+ */
+export interface OrderFulfillmentSelect<T extends boolean = true> {
+  status?: T;
+  supplier?: T;
+  supplierProductId?: T;
+  supplierOrderId?: T;
+  fulfilledAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -857,16 +1127,7 @@ export interface TransactionsSelect<T extends boolean = true> {
 export interface EsimProductsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
-  productPricing?:
-    | T
-    | {
-        listPrice?: T;
-        supplierPrice?: T;
-        profit?: T;
-        pricePerGb?: T;
-        pricePerMin?: T;
-        competitorPrices?: T;
-      };
+  productPricing?: T | EsimProductPricingSelect<T>;
   planType?: T;
   planKycPolicy?: T;
   planValidity?: T;
@@ -897,6 +1158,18 @@ export interface EsimProductsSelect<T extends boolean = true> {
   aiImagePrompts?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EsimProductPricing_select".
+ */
+export interface EsimProductPricingSelect<T extends boolean = true> {
+  listPrice?: T;
+  supplierPrice?: T;
+  profit?: T;
+  pricePerGb?: T;
+  pricePerMin?: T;
+  competitorPrices?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -994,15 +1267,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface BlogPostsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
-  meta?:
-    | T
-    | {
-        overview?: T;
-        title?: T;
-        description?: T;
-        image?: T;
-        preview?: T;
-      };
+  meta?: T | SeoMetaDataSelect<T>;
   featuredImage?: T;
   markAsTopPost?: T;
   slug?: T;
@@ -1021,6 +1286,15 @@ export interface BlogPostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SeoMetaData_select".
+ */
+export interface SeoMetaDataSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1102,6 +1376,14 @@ export interface AiPagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -1133,6 +1415,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Product-related content
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "esim-products-data".
  */

@@ -22,5 +22,6 @@ export interface RootLayoutArgs extends RootPageArgs {
 /**
  * Generic HTML element props, to use on default React.FC function components
  */
-export interface HTMLElementProps<ElementType extends HTMLElement = HTMLDivElement>
-  extends React.HTMLAttributes<ElementType> {}
+export interface HTMLElementProps<
+  ElementType extends HTMLElement = HTMLDivElement,
+> extends React.HTMLAttributes<ElementType> { }

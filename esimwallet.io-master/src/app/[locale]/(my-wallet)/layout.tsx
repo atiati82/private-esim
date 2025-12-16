@@ -1,14 +1,19 @@
 import React, { use } from 'react';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
-import { RootLayoutArgs } from '@/lib/types';
+import type { Locale } from '@/i18n/routing';
 
 import { Headline } from '@/components/ui/Headline';
 import { narrowPageContainer } from '@/styles/layout.css';
 
-const MyWalletLayout: React.FC<RootLayoutArgs> = ({ children, params }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}
+
+const MyWalletLayout: React.FC<LayoutProps> = ({ children, params }) => {
   const { locale } = use(params);
-  unstable_setRequestLocale(locale);
+  unstable_setRequestLocale(locale as Locale);
 
   return (
     <div className={narrowPageContainer}>
